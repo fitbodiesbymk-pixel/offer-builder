@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Offer Builder — MK Coaching</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg:          #F8F5EF;
+      --surface:     #F0EBE1;
+      --green:       #3D5A4A;
+      --green-lt:    #527A62;
+      --gold:        #A07840;
+      --dark:        #1C1916;
+      --muted:       #7A7060;
+      --border:      #DDD8CE;
+      --dark-panel:  #1E1C19;
+      --dark-border: #2E2B27;
+      --dark-muted:  rgba(255,255,255,0.42);
+      --dark-text:   rgba(255,255,255,0.82);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--dark);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ─── SHELL ─── */
+    .shell { min-height: 100vh; display: flex; flex-direction: column; }
+
+    header {
+      padding: 22px 48px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--bg);
+      position: sticky; top: 0; z-index: 10;
+    }
+    .logo { font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--dark); }
+    .header-right { display: flex; align-items: center; gap: 14px; }
+    .session-date { font-size: 12px; color: var(--muted); }
+    .btn-setup {
+      background: transparent; border: 1px solid var(--border); color: var(--muted);
+      padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: 11px;
+      font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .btn-setup:hover { border-color: var(--dark); color: var(--dark); }
+
+    .main { flex: 1; display: flex; align-items: flex-start; justify-content: center; padding: 52px 24px; }
+    .card { width: 100%; max-width: 660px; }
+
+    /* ─── SCREENS ─── */
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    /* ─── SHARED FORM ELEMENTS ─── */
+    .field-label { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; display: block; }
+    .field-input { width: 100%; background: var(--surface); border: 1.5px solid var(--border); padding: 13px 16px; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--dark); outline: none; transition: border-color 0.2s; }
+    .field-input:focus { border-color: var(--green); }
+    .q-textarea { width: 100%; background: var(--surface); border: 1.5px solid var(--border); padding: 18px; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--dark); outline: none; resize: vertical; line-height: 1.7; transition: border-color 0.2s; }
+    .q-textarea:focus { border-color: var(--green); }
+    .q-textarea::placeholder { color: #B8B0A4; }
+    .name-row { margin-bottom: 24px; }
+
+    /* ─── BUTTONS ─── */
+    .btn-row { display: flex; align-items: center; justify-content: space-between; margin-top: 28px; }
+    .btn-primary { background: var(--green); color: #fff; border: none; padding: 13px 32px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+    .btn-primary:hover { background: var(--green-lt); }
+    .btn-outline { background: transparent; color: var(--green); border: 1.5px solid var(--green); padding: 13px 32px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+    .btn-outline:hover { background: var(--green); color: #fff; }
+    .btn-back { background: transparent; color: var(--muted); border: none; padding: 13px 0; font-family: 'DM Sans', sans-serif; font-size: 13px; cursor: pointer; transition: color 0.2s; }
+    .btn-back:hover { color: var(--dark); }
+
+    /* ─── PROGRESS ─── */
+    .progress-row { display: flex; align-items: center; gap: 14px; margin-bottom: 44px; }
+    .progress-bar { flex: 1; height: 2px; background: var(--border); overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--green); transition: width 0.35s ease; }
+    .progress-label { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+
+    /* ─── WELCOME ─── */
+    .welcome-title { font-family: 'DM Serif Display', serif; font-size: clamp(30px,5vw,46px); line-height: 1.1; margin-bottom: 20px; }
+    .welcome-title em { font-style: italic; color: var(--green); }
+    .welcome-body { font-size: 16px; color: var(--muted); line-height: 1.8; margin-bottom: 14px; font-weight: 300; }
+    .welcome-time { font-size: 13px; color: var(--muted); padding: 16px 20px; border: 1px solid var(--border); background: var(--surface); margin-bottom: 36px; display: flex; align-items: center; gap: 10px; }
+    .welcome-time span { color: var(--gold); font-weight: 500; }
+    .welcome-paths { display: flex; flex-direction: column; gap: 12px; }
+    .path-divider { text-align: center; font-size: 12px; color: var(--muted); letter-spacing: 0.06em; padding: 4px 0; }
+
+    /* ─── IMPORT ─── */
+    .import-title { font-family: 'DM Serif Display', serif; font-size: 28px; margin-bottom: 10px; }
+    .import-body { font-size: 15px; color: var(--muted); line-height: 1.75; margin-bottom: 28px; font-weight: 300; }
+    .import-tip { font-size: 12px; color: var(--gold); background: #FBF6EC; border: 1px solid #E8D8B0; padding: 12px 16px; margin-bottom: 24px; line-height: 1.65; }
+    .import-review-header { font-size: 13px; color: var(--muted); padding: 14px 18px; background: var(--surface); border: 1px solid var(--border); margin-bottom: 20px; line-height: 1.6; }
+    .import-q-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; display: block; }
+    .import-q-text { font-size: 13px; color: var(--muted); margin-bottom: 10px; font-style: italic; }
+
+    /* ─── QUESTION ─── */
+    .q-num { font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
+    .q-text { font-family: 'DM Serif Display', serif; font-size: clamp(21px,3.5vw,30px); line-height: 1.25; color: var(--dark); margin-bottom: 10px; }
+    .q-hint { font-size: 13px; color: var(--muted); font-style: italic; font-weight: 300; line-height: 1.65; margin-bottom: 24px; }
+    #screen-question .q-textarea { min-height: 180px; }
+
+    /* ─── GENERATING ─── */
+    .generating-wrap { text-align: center; padding: 64px 0; }
+    .gen-spinner { width: 40px; height: 40px; border: 2px solid var(--border); border-top-color: var(--green); border-radius: 50%; animation: spin 0.9s linear infinite; margin: 0 auto 28px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .gen-title { font-family: 'DM Serif Display', serif; font-size: 24px; margin-bottom: 10px; }
+    .gen-sub { font-size: 14px; color: var(--muted); font-weight: 300; }
+
+    /* ─── SETUP ─── */
+    .setup-title { font-family: 'DM Serif Display', serif; font-size: 26px; margin-bottom: 10px; }
+    .setup-body { font-size: 15px; color: var(--muted); line-height: 1.75; margin-bottom: 28px; font-weight: 300; }
+    .setup-warning { font-size: 12px; color: var(--gold); background: #FBF6EC; border: 1px solid #E8D8B0; padding: 12px 16px; margin-bottom: 24px; line-height: 1.65; }
+    .key-status { font-size: 12px; margin-top: 8px; }
+    .key-status.set { color: var(--green); }
+    .key-status.unset { color: var(--muted); }
+
+    /* ═══════════════════════════════════
+       RESULT / DOCUMENT
+    ═══════════════════════════════════ */
+    .result-wrap { width: 100%; }
+
+    /* ─── UTILITY ROW (screen only) ─── */
+    .result-utilities { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+    .result-utilities-left { font-size: 12px; color: var(--muted); }
+    .result-actions { display: flex; gap: 10px; }
+    .btn-result-action { background: transparent; border: 1px solid var(--border); color: var(--muted); padding: 8px 18px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
+    .btn-result-action:hover { border-color: var(--dark); color: var(--dark); }
+
+    /* ─── DOCUMENT COVER ─── */
+    .doc-cover { background: var(--green); padding: 48px 44px; margin-bottom: 20px; color: #fff; }
+    .cover-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 52px; }
+    .cover-brand { font-family: 'DM Serif Display', serif; font-size: 14px; letter-spacing: 0.06em; color: rgba(255,255,255,0.65); }
+    .cover-date { font-size: 11px; color: rgba(255,255,255,0.45); letter-spacing: 0.06em; text-transform: uppercase; }
+    .cover-title { font-family: 'DM Serif Display', serif; font-size: clamp(44px,7vw,72px); line-height: 0.95; color: #fff; margin-bottom: 24px; font-style: italic; }
+    .cover-for { font-size: 14px; color: rgba(255,255,255,0.65); font-weight: 300; margin-bottom: 40px; }
+    .cover-for strong { color: #fff; font-weight: 500; }
+    .cover-rule { height: 1px; background: rgba(255,255,255,0.18); margin-bottom: 20px; }
+    .cover-meta { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .cover-badge { font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+    .cover-sep { color: rgba(255,255,255,0.2); font-size: 14px; }
+
+    /* ─── STAGE BAR ─── */
+    .stage-panel { background: var(--surface); border: 1px solid var(--border); padding: 24px 28px; margin-bottom: 20px; }
+    .sec-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
+    .stage-nodes { display: flex; align-items: flex-start; position: relative; }
+    .stage-track { position: absolute; top: 10px; left: 11px; right: 11px; height: 2px; background: var(--border); z-index: 0; }
+    .stage-track-fill { height: 100%; background: var(--green); transition: width 0.5s ease; width: 0%; }
+    .stage-node { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
+    .stage-dot { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border); background: var(--bg); margin-bottom: 10px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+    .stage-node.done .stage-dot { background: var(--green); border-color: var(--green); }
+    .stage-node.done .stage-dot::after { content: ''; width: 6px; height: 6px; background: #fff; border-radius: 50%; }
+    .stage-node.active .stage-dot { background: var(--gold); border-color: var(--gold); box-shadow: 0 0 0 4px rgba(160,120,64,0.15); }
+    .stage-node.active .stage-dot::after { content: ''; width: 8px; height: 8px; background: #fff; border-radius: 50%; }
+    .stage-name { font-size: 11px; color: var(--muted); text-align: center; line-height: 1.3; }
+    .stage-node.active .stage-name { color: var(--gold); font-weight: 600; }
+    .stage-node.done .stage-name { color: var(--green); }
+
+    /* ─── ERROR ─── */
+    .error-msg { background: #FBF0EF; border: 1px solid #E8C8C4; color: #7A2E2E; padding: 16px 20px; font-size: 14px; line-height: 1.65; margin-bottom: 20px; display: none; }
+
+    /* ─── DARK PANEL ─── */
+    .dark-panel { background: var(--dark-panel); border: 1px solid var(--dark-border); padding: 40px 44px; margin-bottom: 20px; color: #fff; }
+    .dark-panel .sec-eyebrow { color: var(--dark-muted); }
+    .dark-title { font-family: 'DM Serif Display', serif; font-size: 26px; color: #fff; margin-bottom: 28px; }
+
+    /* ─── LIGHT PANEL ─── */
+    .light-panel { background: var(--surface); border: 1px solid var(--border); padding: 36px 40px; margin-bottom: 20px; }
+    .light-title { font-family: 'DM Serif Display', serif; font-size: 24px; color: var(--dark); margin-bottom: 20px; }
+
+    /* ─── DO THIS TODAY ─── */
+    .step-list { display: flex; flex-direction: column; gap: 26px; }
+    .step-item { display: flex; gap: 20px; align-items: flex-start; }
+    .step-num { width: 32px; height: 32px; border-radius: 50%; background: #2D2A26; border: 1px solid #3D3A34; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: var(--gold); flex-shrink: 0; margin-top: 2px; }
+    .step-body { font-size: 15px; color: var(--dark-text); line-height: 1.75; font-weight: 300; }
+    .step-time { display: inline; color: var(--dark-muted); font-size: 13px; }
+
+    /* ─── PITCH ─── */
+    .pitch-quote { font-family: 'DM Serif Display', serif; font-size: clamp(18px,2.6vw,26px); line-height: 1.4; color: var(--green); font-style: italic; padding: 24px 28px; border-left: 3px solid var(--gold); background: var(--bg); margin-bottom: 28px; }
+
+    /* ─── OFFER GRID ─── */
+    .offer-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .offer-cell { background: var(--bg); padding: 18px 20px; }
+    .offer-cell-label { font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
+    .offer-cell-value { font-size: 14px; color: var(--dark); line-height: 1.55; }
+
+    /* ─── DM SCRIPT ─── */
+    .dm-set { margin-bottom: 22px; }
+    .dm-set:last-of-type { margin-bottom: 0; }
+    .dm-tag { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dark-muted); margin-bottom: 9px; }
+    .dm-bubble { background: #272420; border: 1px solid #37332E; border-radius: 2px 10px 10px 10px; padding: 16px 20px; font-size: 14px; color: var(--dark-text); line-height: 1.8; font-weight: 300; }
+    .btn-copy-dm { background: transparent; border: 1px solid #3A3730; color: var(--dark-muted); padding: 8px 18px; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; margin-top: 20px; }
+    .btn-copy-dm:hover { border-color: rgba(255,255,255,0.25); color: rgba(255,255,255,0.6); }
+
+    /* ─── CALL BLUEPRINT ─── */
+    .call-beat { display: flex; gap: 20px; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid #272420; }
+    .call-beat:first-child { padding-top: 0; }
+    .call-beat:last-child { border-bottom: none; padding-bottom: 0; }
+    .call-phase { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); padding-top: 2px; min-width: 62px; flex-shrink: 0; }
+    .call-text { font-size: 14px; color: var(--dark-text); line-height: 1.75; font-weight: 300; }
+
+    /* ─── OBJECTIONS ─── */
+    .obj-item { border: 1px solid #2D2A26; margin-bottom: 12px; }
+    .obj-item:last-child { margin-bottom: 0; }
+    .obj-q { padding: 13px 18px; background: #252220; border-bottom: 1px solid #2D2A26; display: flex; gap: 10px; align-items: flex-start; }
+    .obj-q-mark { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--gold); line-height: 0.9; flex-shrink: 0; }
+    .obj-q-text { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.62); line-height: 1.5; padding-top: 2px; }
+    .obj-a { padding: 13px 18px; font-size: 14px; color: var(--dark-text); line-height: 1.75; font-weight: 300; }
+
+    /* ─── CONTENT ANGLES ─── */
+    .content-cards { display: flex; flex-direction: column; gap: 14px; }
+    .content-card { background: #252220; border: 1px solid #2E2B27; padding: 18px 22px; display: flex; gap: 16px; align-items: flex-start; }
+    .content-num { font-family: 'DM Serif Display', serif; font-size: 28px; color: #3A3630; line-height: 1; flex-shrink: 0; }
+    .content-text { font-size: 14px; color: var(--dark-text); line-height: 1.75; font-weight: 300; }
+
+    /* ─── CHECKLIST ─── */
+    .checklist { display: flex; flex-direction: column; }
+    .check-item { display: flex; align-items: flex-start; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--border); }
+    .check-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .check-item input[type="checkbox"] { width: 18px; height: 18px; margin-top: 2px; flex-shrink: 0; accent-color: var(--green); cursor: pointer; }
+    .check-label { font-size: 14px; color: var(--dark); line-height: 1.6; cursor: pointer; transition: color 0.2s; }
+    .check-item input:checked + .check-label { text-decoration: line-through; color: var(--muted); }
+
+    /* ─── THE CONVERSATION ─── */
+    .conversation-panel { background: var(--green); border: 1px solid var(--green); padding: 40px 44px; margin-bottom: 20px; }
+    .conversation-panel .sec-eyebrow { color: rgba(255,255,255,0.5); }
+    .conversation-panel .dark-title { color: #fff; margin-bottom: 16px; }
+    .conversation-text { font-size: 15px; color: rgba(255,255,255,0.88); line-height: 1.85; font-weight: 300; }
+
+    /* ─── CLOSING ─── */
+    .closing-panel { background: var(--surface); border: 1px solid var(--border); padding: 36px 44px; margin-bottom: 20px; }
+    .closing-title { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--dark); margin-bottom: 14px; }
+    .closing-body { font-size: 14px; color: var(--muted); line-height: 1.85; font-weight: 300; margin-bottom: 18px; }
+    .closing-body strong { color: var(--dark); font-weight: 500; }
+    .closing-contact { font-size: 11px; color: var(--muted); letter-spacing: 0.06em; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .closing-contact a { color: var(--green); text-decoration: none; font-weight: 500; }
+    .closing-rule { height: 1px; background: var(--border); margin-bottom: 20px; }
+
+    /* ─── RESULT BOTTOM ─── */
+    .result-bottom { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; padding-bottom: 20px; }
+    .btn-restart { background: transparent; border: 1px solid var(--border); color: var(--muted); padding: 11px 24px; font-family: 'DM Sans', sans-serif; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+    .btn-restart:hover { border-color: var(--dark); color: var(--dark); }
+    .btn-send { background: var(--green); color: #fff; border: none; padding: 12px 24px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+    .btn-send:hover { background: var(--green-lt); }
+    .send-confirm { display: none; font-size: 12px; color: var(--green); font-style: italic; align-self: center; }
+
+    /* ─── FOOTER ─── */
+    footer { padding: 20px 48px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .footer-note { font-size: 11px; color: var(--border); letter-spacing: 0.04em; }
+    .save-indicator { font-size: 11px; color: var(--muted); opacity: 0; transition: opacity 0.3s; }
+    .save-indicator.visible { opacity: 1; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 640px) {
+      header { padding: 18px 20px; }
+      .main { padding: 36px 16px; }
+      footer { padding: 18px 20px; }
+      .dark-panel, .light-panel, .conversation-panel, .closing-panel, .stage-panel { padding: 28px 22px; }
+      .doc-cover { padding: 36px 28px; }
+      .offer-grid { grid-template-columns: 1fr; }
+      .result-utilities { flex-direction: column; align-items: flex-start; }
+    }
+
+  </style>
+</head>
+<body>
+<div class="shell">
+
+  <header>
+    <div class="logo">Offer Builder</div>
+    <div class="header-right">
+      <span class="session-date" id="sessionDate"></span>
+      <button class="btn-setup" onclick="showSetup()">⚙ Setup</button>
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="card" id="mainCard">
+
+      <!-- ══ SETUP ══ -->
+      <div class="screen" id="screen-setup">
+        <div class="setup-title">Coach Setup</div>
+        <p class="setup-body">Enter your Anthropic API key to enable offer generation. Stored only on this device — never in the file itself.</p>
+        <div class="setup-warning">Keep this key private. Don't share this device or browser local storage with anyone.</div>
+        <div class="name-row">
+          <label class="field-label" for="apiKeyInput">Anthropic API Key</label>
+          <input class="field-input" type="password" id="apiKeyInput" placeholder="sk-ant-api03-…" autocomplete="off" />
+          <div class="key-status" id="keyStatus"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-back" onclick="cancelSetup()">← Back</button>
+          <button class="btn-primary" onclick="saveApiKey()">Save Key</button>
+        </div>
+      </div>
+
+      <!-- ══ WELCOME ══ -->
+      <div class="screen active" id="screen-welcome">
+        <h1 class="welcome-title">Let's find<br><em>your offer.</em></h1>
+        <p class="welcome-body">Five questions. A complete playbook — action plan, pitch, DM scripts, sales call structure, objection handling, content angles, and more.</p>
+        <div class="welcome-time">
+          <span>⏱</span> <span>5 minutes</span> to complete &nbsp;·&nbsp; <span>Full playbook</span> ready at the end
+        </div>
+        <div class="name-row">
+          <label class="field-label" for="clientName">Your name</label>
+          <input class="field-input" type="text" id="clientName" placeholder="First name is fine" autocomplete="off" />
+        </div>
+        <div class="welcome-paths">
+          <button class="btn-primary" onclick="startIntake()">Answer the questions → </button>
+          <div class="path-divider">or</div>
+          <button class="btn-outline" onclick="showImport()">Import client answers →</button>
+        </div>
+      </div>
+
+      <!-- ══ IMPORT ══ -->
+      <div class="screen" id="screen-import">
+        <div class="import-title">Import Client Answers</div>
+        <p class="import-body">Paste the client's form responses below. Works with Google Form emails, plain text, or anything copied from WhatsApp or email — one answer per paragraph.</p>
+        <div class="import-tip">
+          <strong>Google Form tip:</strong> In your form response email, copy just the five answers (not the question text), separated by blank lines. Paste below.
+        </div>
+
+        <div id="importPasteView">
+          <div class="name-row">
+            <label class="field-label" for="importClientName">Client name</label>
+            <input class="field-input" type="text" id="importClientName" placeholder="e.g. Sarah" autocomplete="off" />
+          </div>
+          <div class="name-row">
+            <label class="field-label" for="pasteBox">Paste answers here</label>
+            <textarea class="q-textarea" id="pasteBox" style="min-height: 220px;" placeholder="Paste the 5 answers here. Put a blank line between each answer."></textarea>
+          </div>
+          <div class="btn-row">
+            <button class="btn-back" onclick="switchScreen('screen-welcome')">← Back</button>
+            <button class="btn-primary" onclick="parseAnswers()">Parse Answers →</button>
+          </div>
+        </div>
+
+        <div id="importReviewView" style="display:none;">
+          <div class="import-review-header">Review the parsed answers below. Edit anything that looks off, then generate.</div>
+          <div id="importFields"></div>
+          <div class="btn-row">
+            <button class="btn-back" onclick="showPasteView()">← Re-paste</button>
+            <button class="btn-primary" onclick="generateFromImport()">Generate Playbook →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ QUESTION ══ -->
+      <div class="screen" id="screen-question">
+        <div class="progress-row">
+          <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+          <div class="progress-label" id="progressLabel"></div>
+        </div>
+        <div class="q-num" id="qNum"></div>
+        <div class="q-text" id="qText"></div>
+        <div class="q-hint" id="qHint"></div>
+        <textarea class="q-textarea" id="qAnswer" oninput="autoSave()" style="min-height:180px;"></textarea>
+        <div class="btn-row">
+          <button class="btn-back" id="qBackBtn" onclick="prevQ()">← Back</button>
+          <button class="btn-primary" id="btnNext" onclick="nextQ()">Next →</button>
+        </div>
+      </div>
+
+      <!-- ══ GENERATING ══ -->
+      <div class="screen" id="screen-generating">
+        <div class="generating-wrap">
+          <div class="gen-spinner"></div>
+          <div class="gen-title">Building your playbook…</div>
+          <div class="gen-sub">Reading every answer and mapping what's possible.</div>
+        </div>
+      </div>
+
+      <!-- ══ RESULT ══ -->
+      <div class="screen" id="screen-result">
+        <div class="result-wrap">
+
+          <!-- Screen-only utilities -->
+          <div class="result-utilities">
+            <div class="result-utilities-left" id="resultMeta"></div>
+            <div class="result-actions">
+              <button class="btn-result-action" onclick="copyAll()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="1"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                Copy All
+              </button>
+              <button class="btn-result-action" id="savePdfBtn" onclick="savePDF()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download
+              </button>
+            </div>
+          </div>
+
+          <!-- 0. Document Cover -->
+          <div class="doc-cover">
+            <div class="cover-top">
+              <div class="cover-brand">MK Coaching</div>
+              <div class="cover-date" id="coverDate"></div>
+            </div>
+            <div class="cover-title">Offer<br>Playbook.</div>
+            <div class="cover-for">Prepared for <strong id="coverName">—</strong></div>
+            <div class="cover-rule"></div>
+            <div class="cover-meta">
+              <span class="cover-badge" id="coverFocus">—</span>
+              <span class="cover-sep">·</span>
+              <span class="cover-badge" id="coverStage">—</span>
+              <span class="cover-sep">·</span>
+              <span class="cover-badge" id="coverTime">—</span>
+            </div>
+          </div>
+
+          <!-- Stage -->
+          <div class="stage-panel">
+            <div class="sec-eyebrow">Your Current Stage</div>
+            <div class="stage-nodes" id="stageNodes">
+              <div class="stage-track"><div class="stage-track-fill" id="stageTrackFill"></div></div>
+              <div class="stage-node"><div class="stage-dot"></div><div class="stage-name">Not<br>Started</div></div>
+              <div class="stage-node"><div class="stage-dot"></div><div class="stage-name">Starter</div></div>
+              <div class="stage-node"><div class="stage-dot"></div><div class="stage-name">Builder</div></div>
+              <div class="stage-node"><div class="stage-dot"></div><div class="stage-name">Scaler</div></div>
+            </div>
+          </div>
+
+          <div class="error-msg" id="errorMsg"></div>
+
+          <!-- 01. Do This Today -->
+          <div class="dark-panel">
+            <div class="sec-eyebrow">01 — Action Plan</div>
+            <div class="dark-title">Do This Today</div>
+            <div class="step-list" id="stepList"></div>
+          </div>
+
+          <!-- 02. Positioning -->
+          <div class="light-panel">
+            <div class="sec-eyebrow">02 — Positioning</div>
+            <div class="light-title">One-Sentence Pitch</div>
+            <div class="pitch-quote" id="pitchQuote">—</div>
+            <div class="light-title">Offer Framework</div>
+            <div class="offer-grid">
+              <div class="offer-cell">
+                <div class="offer-cell-label">What to Call It</div>
+                <div class="offer-cell-value" id="offerName">—</div>
+              </div>
+              <div class="offer-cell">
+                <div class="offer-cell-label">Price Range</div>
+                <div class="offer-cell-value" id="offerPrice">—</div>
+              </div>
+              <div class="offer-cell">
+                <div class="offer-cell-label">Delivery Format</div>
+                <div class="offer-cell-value" id="offerFormat">—</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 03. DM Starter Script -->
+          <div class="dark-panel">
+            <div class="sec-eyebrow">03 — Sales Engine</div>
+            <div class="dark-title">DM Starter Script</div>
+            <div class="dm-set">
+              <div class="dm-tag">First Message</div>
+              <div class="dm-bubble" id="dmOpener">—</div>
+            </div>
+            <div class="dm-set">
+              <div class="dm-tag">48-Hour Follow-Up</div>
+              <div class="dm-bubble" id="dmFollowup">—</div>
+            </div>
+            <button class="btn-copy-dm" onclick="copyDM()">Copy Both Messages</button>
+          </div>
+
+          <!-- 04. Sales Call Blueprint -->
+          <div class="dark-panel">
+            <div class="sec-eyebrow">04 — Sales Engine</div>
+            <div class="dark-title">Sales Call Blueprint</div>
+            <div class="call-beat"><div class="call-phase">Open</div><div class="call-text" id="callOpener">—</div></div>
+            <div class="call-beat"><div class="call-phase">Explore</div><div class="call-text" id="callQ1">—</div></div>
+            <div class="call-beat"><div class="call-phase">Qualify</div><div class="call-text" id="callQ2">—</div></div>
+            <div class="call-beat"><div class="call-phase">Close</div><div class="call-text" id="callClose">—</div></div>
+          </div>
+
+          <!-- 05. Handle Objections -->
+          <div class="dark-panel">
+            <div class="sec-eyebrow">05 — Sales Engine</div>
+            <div class="dark-title">Handle Objections</div>
+            <div id="objList"></div>
+          </div>
+
+          <!-- 06. Content This Week -->
+          <div class="dark-panel">
+            <div class="sec-eyebrow">06 — Build Authority</div>
+            <div class="dark-title">Content This Week</div>
+            <div class="content-cards" id="contentCards"></div>
+          </div>
+
+          <!-- 07. Weekly Checklist -->
+          <div class="light-panel">
+            <div class="sec-eyebrow">07 — Build Authority</div>
+            <div class="light-title">Weekly Checklist</div>
+            <div class="checklist" id="checklist"></div>
+          </div>
+
+          <!-- 08. The Conversation to Have -->
+          <div class="conversation-panel">
+            <div class="sec-eyebrow">08 — This Week's Move</div>
+            <div class="dark-title">The Conversation to Have</div>
+            <div class="conversation-text" id="conversationText">—</div>
+          </div>
+
+          <!-- Closing -->
+          <div class="closing-panel">
+            <div class="closing-rule"></div>
+            <div class="closing-title">What's next</div>
+            <div class="closing-body">
+              Review this playbook and start with <strong>Do This Today</strong> — those five steps are your immediate focus.
+              Work through each section this week. The DM script and sales call blueprint are ready to use as-is.
+              When you're ready to go deeper, reach out.
+            </div>
+            <div class="closing-contact">
+              MK Coaching
+              &nbsp;·&nbsp;
+              <a href="https://fitbodiesbymk-pixel.github.io/builtbymk/" target="_blank">builtbymk.com</a>
+              &nbsp;·&nbsp;
+              fitbodiesbymk@gmail.com
+            </div>
+          </div>
+
+          <div class="result-bottom">
+            <button class="btn-restart" onclick="restartIntake()">New session</button>
+            <button class="btn-send" onclick="sendToMK()">Send to MK</button>
+            <span class="send-confirm" id="sendConfirm">Sent.</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-note">MK Coaching · Confidential</div>
+    <div class="save-indicator" id="saveIndicator">Saved</div>
+  </footer>
+
+</div>
+<script>
+  const QUESTIONS = [
+    {
+      text: "What's your skill or area of expertise — the thing you've learned, applied, and seen real results from?",
+      hint: "Don't be modest. What do you actually know how to do, and where have you seen it work?",
+      placeholder: "e.g. fitness coaching, digital marketing, financial planning, sales…"
+    },
+    {
+      text: "Who specifically do you want to help — describe the actual person, not a category.",
+      hint: "Age, situation, what they're struggling with, what they've tried. The more specific, the better the plan.",
+      placeholder: "e.g. women in their 40s who've tried every diet and feel stuck…"
+    },
+    {
+      text: "What's your current situation — audience, offer, paying clients, or starting from zero?",
+      hint: "Be honest about where you're actually at. No judgment — the plan needs to fit your real starting point.",
+      placeholder: "e.g. small Instagram following, no paid clients yet, one idea I haven't launched…"
+    },
+    {
+      text: "What have you already tried that hasn't worked, and what do you think got in the way?",
+      hint: "Past attempts tell us more than future plans. What happened and why did it stall?",
+      placeholder: "e.g. built a course nobody bought, started a newsletter then stopped…"
+    },
+    {
+      text: "What would feel like a real win for you in the next 7 days?",
+      hint: "Not a dream — a real, achievable thing that would make you feel like this is actually moving.",
+      placeholder: "e.g. one paid client, a clear offer written down, 10 new followers who match my audience…"
+    }
+  ];
+
+  let currentQ    = 0;
+  let answers     = new Array(QUESTIONS.length).fill('');
+  let clientName  = '';
+  let _prevScreen = 'screen-welcome';
+  let parsed      = {};
+
+  const now = new Date();
+  document.getElementById('sessionDate').textContent =
+    now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+  // ─── PERSISTENCE ───
+  function loadSaved() {
+    try {
+      const d = JSON.parse(localStorage.getItem('offer_builder') || '{}');
+      answers    = d.answers    || new Array(QUESTIONS.length).fill('');
+      clientName = d.clientName || '';
+      if (clientName) document.getElementById('clientName').value = clientName;
+    } catch(e) {}
+  }
+
+  function saveProgress() {
+    localStorage.setItem('offer_builder', JSON.stringify({ answers, clientName }));
+    const el = document.getElementById('saveIndicator');
+    el.classList.add('visible');
+    setTimeout(() => el.classList.remove('visible'), 1600);
+  }
+
+  function autoSave() {
+    answers[currentQ] = document.getElementById('qAnswer').value;
+    saveProgress();
+  }
+
+  // ─── SCREEN FLOW ───
+  function switchScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+    document.getElementById('mainCard').style.maxWidth = id === 'screen-result' ? '820px' : '660px';
+  }
+
+  function startIntake() {
+    clientName = document.getElementById('clientName').value.trim() || 'Client';
+    saveProgress();
+    currentQ = 0;
+    showQuestion();
+    switchScreen('screen-question');
+  }
+
+  function showQuestion() {
+    const q = QUESTIONS[currentQ];
+    const total = QUESTIONS.length;
+    document.getElementById('qNum').textContent  = `Question ${currentQ + 1} of ${total}`;
+    document.getElementById('qText').textContent = q.text;
+    document.getElementById('qHint').textContent = q.hint;
+    const ta = document.getElementById('qAnswer');
+    ta.value       = answers[currentQ] || '';
+    ta.placeholder = q.placeholder;
+    ta.focus();
+    document.getElementById('progressFill').style.width  = `${(currentQ / total) * 100}%`;
+    document.getElementById('progressLabel').textContent = `${currentQ + 1} / ${total}`;
+    document.getElementById('qBackBtn').style.visibility = currentQ === 0 ? 'hidden' : 'visible';
+    document.getElementById('btnNext').textContent = currentQ === total - 1 ? 'Generate →' : 'Next →';
+  }
+
+  function nextQ() {
+    answers[currentQ] = document.getElementById('qAnswer').value.trim();
+    saveProgress();
+    if (currentQ < QUESTIONS.length - 1) { currentQ++; showQuestion(); }
+    else generate();
+  }
+
+  function prevQ() {
+    answers[currentQ] = document.getElementById('qAnswer').value.trim();
+    if (currentQ > 0) { currentQ--; showQuestion(); }
+  }
+
+  function restartIntake() {
+    if (!confirm('Clear this session and start over?')) return;
+    answers = new Array(QUESTIONS.length).fill('');
+    clientName = '';
+    parsed = {};
+    localStorage.removeItem('offer_builder');
+    document.getElementById('clientName').value = '';
+    currentQ = 0;
+    switchScreen('screen-welcome');
+  }
+
+  // ─── IMPORT ───
+  function showImport() {
+    clientName = document.getElementById('clientName').value.trim();
+    if (clientName) document.getElementById('importClientName').value = clientName;
+    showPasteView();
+    switchScreen('screen-import');
+  }
+
+  function showPasteView() {
+    document.getElementById('importPasteView').style.display  = 'block';
+    document.getElementById('importReviewView').style.display = 'none';
+  }
+
+  function parseAnswers() {
+    const raw  = document.getElementById('pasteBox').value.trim();
+    const name = document.getElementById('importClientName').value.trim();
+    if (!raw) return;
+    clientName = name || 'Client';
+
+    // Split by blank lines; fall back to single newlines
+    let blocks = raw.split(/\n\s*\n/).map(b => b.trim()).filter(Boolean);
+    if (blocks.length < 5) blocks = raw.split('\n').map(l => l.trim()).filter(Boolean);
+
+    // Take first 5 meaningful blocks
+    const parsed5 = blocks.slice(0, 5);
+
+    answers = new Array(QUESTIONS.length).fill('');
+    parsed5.forEach((a, i) => { if (i < 5) answers[i] = a; });
+
+    // Show review fields
+    const container = document.getElementById('importFields');
+    container.innerHTML = '';
+    QUESTIONS.forEach((q, i) => {
+      container.innerHTML += `
+        <div style="margin-bottom:22px;">
+          <span class="import-q-label">Answer ${i + 1}</span>
+          <div class="import-q-text">${q.text}</div>
+          <textarea class="q-textarea" id="imp${i}" style="min-height:90px;">${parsed5[i] || ''}</textarea>
+        </div>`;
+    });
+
+    document.getElementById('importPasteView').style.display  = 'none';
+    document.getElementById('importReviewView').style.display = 'block';
+  }
+
+  function generateFromImport() {
+    QUESTIONS.forEach((_, i) => {
+      const el = document.getElementById(`imp${i}`);
+      if (el) answers[i] = el.value.trim();
+    });
+    saveProgress();
+    generate();
+  }
+
+  // ─── API KEY ───
+  function showSetup() {
+    _prevScreen = document.querySelector('.screen.active')?.id || 'screen-welcome';
+    const key = localStorage.getItem('clarity_api_key') || '';
+    const inp = document.getElementById('apiKeyInput');
+    inp.value = key ? '••••••••••••••••••••' : '';
+    inp.placeholder = key ? 'Key saved — paste new key to replace' : 'sk-ant-api03-…';
+    updateKeyStatus();
+    switchScreen('screen-setup');
+  }
+
+  function cancelSetup() { switchScreen(_prevScreen); }
+
+  function saveApiKey() {
+    const val = document.getElementById('apiKeyInput').value.trim();
+    if (!val || val.startsWith('•')) { cancelSetup(); return; }
+    if (!val.startsWith('sk-ant-')) {
+      document.getElementById('keyStatus').textContent = 'Invalid — should start with sk-ant-';
+      document.getElementById('keyStatus').className = 'key-status unset';
+      return;
+    }
+    localStorage.setItem('clarity_api_key', val);
+    updateKeyStatus();
+    cancelSetup();
+  }
+
+  function updateKeyStatus() {
+    const el  = document.getElementById('keyStatus');
+    const key = localStorage.getItem('clarity_api_key');
+    if (!el) return;
+    el.textContent = key ? '✓ Key saved on this device' : 'No key saved yet';
+    el.className   = 'key-status ' + (key ? 'set' : 'unset');
+  }
+
+  // ─── GENERATE ───
+  async function generate() {
+    const apiKey = localStorage.getItem('clarity_api_key');
+    if (!apiKey) {
+      showError('No API key set up. Click ⚙ Setup in the top right to add your Anthropic key.');
+      switchScreen('screen-result');
+      return;
+    }
+
+    switchScreen('screen-generating');
+
+    const qaBlock = QUESTIONS.map((q, i) =>
+      `Q${i+1}: ${q.text}\nAnswer: ${answers[i] || '(no answer given)'}`
+    ).join('\n\n');
+
+    const prompt = `You are a business action coach. A client answered 5 intake questions. Build a complete offer playbook from their answers.
+
+Client: ${clientName}
+
+${qaBlock}
+
+Respond with EXACTLY this format — no extra text, no commentary, nothing outside this structure:
+
+FOCUS_TYPE: [one word or short phrase: Builder, Teacher, Coach, Connector, Consultant, Creator, Expert]
+TIME_INVESTMENT: [total minutes as a number followed by Minutes, e.g. 75 Minutes]
+STAGE: [exactly one of: Not Started, Starter, Builder, Scaler — Not Started = no audience or clients; Starter = small following or 1-2 clients; Builder = consistent clients, building systems; Scaler = established offer, growing]
+
+STEP_1: [Specific action step from what they told you. 2-3 sentences. End with time in parentheses e.g. (15 min)]
+STEP_2: [same format]
+STEP_3: [same format]
+STEP_4: [same format]
+STEP_5: [same format]
+
+PITCH: [One sentence, max 20 words. Describes exactly who they help and what outcome. No jargon. Sayable out loud.]
+
+OFFER_NAME: [What to call the offer. 3-6 words.]
+OFFER_PRICE: [Suggested price range with a one-phrase reason, e.g. $300-500/mo — entry-level 1:1 coaching]
+OFFER_FORMAT: [How it gets delivered: 1:1 calls, group program, digital product, community membership, etc.]
+
+DM_OPENER: [First DM to a potential client. 1-2 sentences. Reference their specific world. Not a pitch — an honest observation that opens a door. Human, not marketer.]
+DM_FOLLOWUP: [48-hour follow-up if no reply. 1 sentence. Light touch, zero pressure.]
+
+CALL_OPENER: [Exact words to open the discovery call. 1-2 sentences.]
+CALL_Q1: [First question that surfaces their pain. 1 sentence.]
+CALL_Q2: [Second question that qualifies their motivation. 1 sentence.]
+CALL_CLOSE: [How to bridge from conversation to presenting the offer. 2-3 sentences.]
+
+OBJ_1_QUESTION: [Most common objection — write it as the client would actually say it]
+OBJ_1_ANSWER: [Confident, non-defensive response. 2-3 sentences.]
+OBJ_2_QUESTION: [Second objection]
+OBJ_2_ANSWER: [Response]
+OBJ_3_QUESTION: [Third objection]
+OBJ_3_ANSWER: [Response]
+
+CONTENT_1: [Post angle #1 — one sentence on what to post and why it attracts their exact audience]
+CONTENT_2: [Post angle #2]
+CONTENT_3: [Post angle #3]
+
+CHECK_1: [One specific weekly action to build credibility. Short, concrete.]
+CHECK_2: [same]
+CHECK_3: [same]
+CHECK_4: [same]
+CHECK_5: [same]
+
+CONVERSATION: [The one real-world conversation to have this week. Who to reach out to, on which platform, and the opening line. 2-3 sentences. Specific enough to act on today.]
+
+Rules:
+- Every field must reference what they actually told you — their specific skill, audience, and situation
+- No generic advice that could apply to anyone
+- DM messages must sound like a real person, not a template
+- Objections must be real ones for this exact offer type and price point
+- Total time across all 5 steps: 60–90 minutes`;
+
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 2200,
+          messages: [{ role: 'user', content: prompt }]
+        })
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error?.message || `API error ${res.status}`);
+      }
+
+      const data = await res.json();
+      renderResult(data.content?.[0]?.text || '');
+
+    } catch(err) {
+      showError(`Error: ${err.message}. Check your API key in ⚙ Setup.`);
+      switchScreen('screen-result');
+    }
+  }
+
+  // ─── RENDER ───
+  function renderResult(text) {
+    const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+    const get = (prefix) => {
+      const line = lines.find(l => l.startsWith(prefix + ':'));
+      return line ? line.slice(prefix.length + 1).trim() : '';
+    };
+
+    parsed = {
+      focusType:   get('FOCUS_TYPE'),
+      timeInv:     get('TIME_INVESTMENT'),
+      stage:       get('STAGE'),
+      steps:       [1,2,3,4,5].map(n => get(`STEP_${n}`)).filter(Boolean),
+      pitch:       get('PITCH'),
+      offerName:   get('OFFER_NAME'),
+      offerPrice:  get('OFFER_PRICE'),
+      offerFormat: get('OFFER_FORMAT'),
+      dmOpener:    get('DM_OPENER'),
+      dmFollowup:  get('DM_FOLLOWUP'),
+      callOpener:  get('CALL_OPENER'),
+      callQ1:      get('CALL_Q1'),
+      callQ2:      get('CALL_Q2'),
+      callClose:   get('CALL_CLOSE'),
+      objections:  [1,2,3].map(n => ({ q: get(`OBJ_${n}_QUESTION`), a: get(`OBJ_${n}_ANSWER`) })).filter(o => o.q),
+      content:     [1,2,3].map(n => get(`CONTENT_${n}`)).filter(Boolean),
+      checks:      [1,2,3,4,5].map(n => get(`CHECK_${n}`)).filter(Boolean),
+      conversation: get('CONVERSATION')
+    };
+
+    const p = parsed;
+
+    // Cover
+    document.getElementById('coverDate').textContent  = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    document.getElementById('coverName').textContent  = clientName || '—';
+    document.getElementById('coverFocus').textContent = p.focusType ? `FOCUS: ${p.focusType.toUpperCase()}` : '—';
+    document.getElementById('coverStage').textContent = p.stage ? `STAGE: ${p.stage.toUpperCase()}` : '—';
+    document.getElementById('coverTime').textContent  = p.timeInv || '—';
+
+    // Screen meta
+    document.getElementById('resultMeta').textContent = `${clientName} · ${now.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}`;
+
+    // Stage bar
+    const STAGES = ['Not Started', 'Starter', 'Builder', 'Scaler'];
+    const activeIdx = STAGES.indexOf(p.stage);
+    document.querySelectorAll('#stageNodes .stage-node').forEach((node, i) => {
+      node.classList.remove('active', 'done');
+      if (i < activeIdx) node.classList.add('done');
+      else if (i === activeIdx) node.classList.add('active');
+    });
+    const pct = activeIdx <= 0 ? 0 : (activeIdx / (STAGES.length - 1)) * 100;
+    document.getElementById('stageTrackFill').style.width = `${pct}%`;
+
+    // Steps
+    const stepList = document.getElementById('stepList');
+    stepList.innerHTML = '';
+    p.steps.forEach((step, i) => {
+      const tm = step.match(/\((\d+\s*min[^)]*)\)\s*$/i);
+      const ts = tm ? tm[1] : '';
+      const bt = tm ? step.slice(0, tm.index).trim() : step;
+      stepList.innerHTML += `
+        <div class="step-item">
+          <div class="step-num">${i + 1}</div>
+          <div class="step-body">${bt}${ts ? ` <span class="step-time">(${ts})</span>` : ''}</div>
+        </div>`;
+    });
+
+    // Positioning
+    document.getElementById('pitchQuote').textContent  = p.pitch      || '—';
+    document.getElementById('offerName').textContent   = p.offerName  || '—';
+    document.getElementById('offerPrice').textContent  = p.offerPrice || '—';
+    document.getElementById('offerFormat').textContent = p.offerFormat || '—';
+
+    // DM
+    document.getElementById('dmOpener').textContent   = p.dmOpener   || '—';
+    document.getElementById('dmFollowup').textContent = p.dmFollowup || '—';
+
+    // Call
+    document.getElementById('callOpener').textContent = p.callOpener || '—';
+    document.getElementById('callQ1').textContent     = p.callQ1     || '—';
+    document.getElementById('callQ2').textContent     = p.callQ2     || '—';
+    document.getElementById('callClose').textContent  = p.callClose  || '—';
+
+    // Objections
+    const objList = document.getElementById('objList');
+    objList.innerHTML = '';
+    p.objections.forEach(obj => {
+      objList.innerHTML += `
+        <div class="obj-item">
+          <div class="obj-q"><span class="obj-q-mark">"</span><span class="obj-q-text">${obj.q}"</span></div>
+          <div class="obj-a">${obj.a}</div>
+        </div>`;
+    });
+
+    // Content
+    const cards = document.getElementById('contentCards');
+    cards.innerHTML = '';
+    p.content.forEach((c, i) => {
+      cards.innerHTML += `
+        <div class="content-card">
+          <div class="content-num">${i + 1}</div>
+          <div class="content-text">${c}</div>
+        </div>`;
+    });
+
+    // Checklist
+    const checklist = document.getElementById('checklist');
+    checklist.innerHTML = '';
+    p.checks.forEach((c, i) => {
+      const id = `chk_${i}`;
+      checklist.innerHTML += `
+        <div class="check-item">
+          <input type="checkbox" id="${id}" />
+          <label class="check-label" for="${id}">${c}</label>
+        </div>`;
+    });
+
+    // Conversation
+    document.getElementById('conversationText').textContent = p.conversation || '—';
+
+    document.getElementById('errorMsg').style.display = 'none';
+    switchScreen('screen-result');
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('errorMsg');
+    el.textContent = msg;
+    el.style.display = 'block';
+  }
+
+  // ─── COPY ALL ───
+  function copyAll() {
+    const p = parsed;
+    let t = `MK COACHING — OFFER PLAYBOOK\n`;
+    t += `${clientName} · ${now.toLocaleDateString('en-GB')}\n`;
+    t += `Focus: ${p.focusType || '—'} · Stage: ${p.stage || '—'} · ${p.timeInv || '—'}\n\n`;
+    t += `──────────────────────────\n01 DO THIS TODAY\n──────────────────────────\n\n`;
+    t += p.steps.map((s, i) => `${i+1}. ${s}`).join('\n\n');
+    t += `\n\n──────────────────────────\n02 POSITIONING\n──────────────────────────\n\n`;
+    t += `PITCH: ${p.pitch || '—'}\n\n`;
+    t += `Offer Name: ${p.offerName || '—'}\nPrice: ${p.offerPrice || '—'}\nFormat: ${p.offerFormat || '—'}\n\n`;
+    t += `──────────────────────────\n03 DM STARTER SCRIPT\n──────────────────────────\n\n`;
+    t += `First Message:\n${p.dmOpener || '—'}\n\nFollow-Up (48h):\n${p.dmFollowup || '—'}\n\n`;
+    t += `──────────────────────────\n04 SALES CALL BLUEPRINT\n──────────────────────────\n\n`;
+    t += `Open: ${p.callOpener || '—'}\nExplore: ${p.callQ1 || '—'}\nQualify: ${p.callQ2 || '—'}\nClose: ${p.callClose || '—'}\n\n`;
+    t += `──────────────────────────\n05 HANDLE OBJECTIONS\n──────────────────────────\n\n`;
+    p.objections?.forEach(o => { t += `"${o.q}"\n→ ${o.a}\n\n`; });
+    t += `──────────────────────────\n06 CONTENT THIS WEEK\n──────────────────────────\n\n`;
+    p.content?.forEach((c, i) => { t += `${i+1}. ${c}\n`; });
+    t += `\n──────────────────────────\n07 WEEKLY CHECKLIST\n──────────────────────────\n\n`;
+    p.checks?.forEach(c => { t += `☐ ${c}\n`; });
+    t += `\n──────────────────────────\n08 THE CONVERSATION TO HAVE\n──────────────────────────\n\n`;
+    t += p.conversation || '—';
+
+    navigator.clipboard.writeText(t.trim()).then(() => {
+      const btn = document.querySelector('.btn-result-action');
+      const orig = btn.innerHTML;
+      btn.innerHTML = '✓ Copied';
+      setTimeout(() => btn.innerHTML = orig, 2000);
+    });
+  }
+
+  function buildExportDoc() {
+    const p    = parsed;
+    const name = clientName || 'Client';
+    const date = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    const stepsHTML = p.steps.map((s, i) => {
+      const tm = s.match(/\((\d+\s*min[^)]*)\)\s*$/i);
+      const ts = tm ? `<span class="t-time"> (${tm[1]})</span>` : '';
+      const bt = tm ? s.slice(0, tm.index).trim() : s;
+      return `<div class="step"><div class="step-n">${i+1}</div><div class="step-t">${bt}${ts}</div></div>`;
+    }).join('');
+
+    const objHTML = p.objections.map(o =>
+      `<div class="obj"><div class="obj-q">"${o.q}"</div><div class="obj-a">${o.a}</div></div>`
+    ).join('');
+
+    const contentHTML = p.content.map((c, i) =>
+      `<div class="c-row"><div class="c-n">${i+1}</div><div class="c-t">${c}</div></div>`
+    ).join('');
+
+    const checkHTML = p.checks.map(c =>
+      `<div class="chk"><span class="chk-box">☐</span><span>${c}</span></div>`
+    ).join('');
+
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Offer Playbook — ${name}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: #fff; color: #1C1916; font-size: 14px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+/* COVER */
+.cover {
+  width: 100%; height: 1122px;
+  background: #3D5A4A;
+  padding: 64px 72px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  page-break-after: always;
+}
+.cov-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.cov-brand { font-family: 'DM Serif Display', serif; font-size: 14px; color: rgba(255,255,255,0.6); letter-spacing: 0.06em; }
+.cov-conf { font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 0.06em; margin-top: 4px; }
+.cov-mid { }
+.cov-title { font-family: 'DM Serif Display', serif; font-size: 86px; line-height: 0.88; color: #fff; font-style: italic; margin-bottom: 44px; }
+.cov-rule { width: 52px; height: 2px; background: #A07840; margin-bottom: 32px; }
+.cov-label { font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 10px; }
+.cov-name { font-family: 'DM Serif Display', serif; font-size: 34px; color: #fff; margin-bottom: 12px; }
+.cov-date { font-size: 13px; color: rgba(255,255,255,0.5); }
+.cov-foot { font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 0.05em; }
+
+/* BODY */
+.doc { max-width: 640px; margin: 0 auto; padding: 64px 48px; }
+
+/* SECTIONS */
+.sec { margin-bottom: 52px; padding-bottom: 52px; border-bottom: 1px solid #EAE6DE; }
+.sec:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.sec-eye { font-size: 10px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: #A07840; margin-bottom: 8px; }
+.sec-title { font-family: 'DM Serif Display', serif; font-size: 26px; color: #1C1916; line-height: 1.15; margin-bottom: 26px; }
+
+/* STEPS */
+.step { display: flex; gap: 16px; margin-bottom: 20px; align-items: flex-start; }
+.step:last-child { margin-bottom: 0; }
+.step-n { width: 28px; height: 28px; border-radius: 50%; background: #F5F0E8; border: 1px solid #DDD8CE; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: #A07840; flex-shrink: 0; margin-top: 3px; }
+.step-t { font-size: 14px; color: #1C1916; line-height: 1.75; }
+.t-time { color: #7A7060; font-size: 12px; }
+
+/* PITCH */
+.pitch { font-family: 'DM Serif Display', serif; font-size: 22px; line-height: 1.45; color: #3D5A4A; font-style: italic; border-left: 3px solid #A07840; padding: 18px 22px; background: #F5F0E8; margin-bottom: 28px; }
+
+/* OFFER GRID */
+.o-grid { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid #DDD8CE; }
+.o-cell { padding: 18px 20px; border-right: 1px solid #DDD8CE; }
+.o-cell:last-child { border-right: none; }
+.o-label { font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #7A7060; margin-bottom: 7px; }
+.o-val { font-size: 13px; color: #1C1916; line-height: 1.5; }
+
+/* DM */
+.dm-lbl { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #7A7060; margin-bottom: 9px; margin-top: 22px; }
+.dm-lbl:first-child { margin-top: 0; }
+.dm-bbl { background: #F5F0E8; border: 1px solid #DDD8CE; border-radius: 2px 12px 12px 12px; padding: 15px 18px; font-size: 13px; line-height: 1.85; color: #1C1916; }
+
+/* CALL */
+.beat { display: flex; gap: 18px; padding: 14px 0; border-bottom: 1px solid #EAE6DE; align-items: flex-start; }
+.beat:first-child { padding-top: 0; }
+.beat:last-child { border-bottom: none; padding-bottom: 0; }
+.beat-ph { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #3D5A4A; min-width: 58px; padding-top: 2px; flex-shrink: 0; }
+.beat-tx { font-size: 13px; color: #1C1916; line-height: 1.75; }
+
+/* OBJECTIONS */
+.obj { border: 1px solid #DDD8CE; margin-bottom: 12px; }
+.obj:last-child { margin-bottom: 0; }
+.obj-q { padding: 12px 16px; background: #F8F5EF; border-bottom: 1px solid #DDD8CE; font-size: 13px; color: #7A7060; font-style: italic; line-height: 1.65; }
+.obj-a { padding: 12px 16px; font-size: 13px; color: #1C1916; line-height: 1.75; }
+
+/* CONTENT */
+.c-row { display: flex; gap: 16px; margin-bottom: 16px; align-items: flex-start; }
+.c-row:last-child { margin-bottom: 0; }
+.c-n { font-family: 'DM Serif Display', serif; font-size: 30px; color: #DDD8CE; line-height: 1; flex-shrink: 0; }
+.c-t { font-size: 13px; color: #1C1916; line-height: 1.75; padding-top: 4px; }
+
+/* CHECKLIST */
+.chk { display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid #EAE6DE; font-size: 13px; color: #1C1916; align-items: flex-start; }
+.chk:last-child { border-bottom: none; }
+.chk-box { color: #3D5A4A; font-size: 15px; flex-shrink: 0; line-height: 1.5; }
+
+/* CONVERSATION */
+.convo { font-size: 15px; color: #1C1916; line-height: 1.9; }
+
+/* WHAT'S NEXT */
+.next-body { font-size: 13px; color: #7A7060; line-height: 1.9; }
+.next-body strong { color: #1C1916; font-weight: 500; }
+
+/* FOOTER */
+.doc-ft { border-top: 1px solid #DDD8CE; padding-top: 18px; margin-top: 52px; display: flex; justify-content: space-between; font-size: 11px; color: #7A7060; letter-spacing: 0.04em; }
+.doc-ft a { color: #3D5A4A; text-decoration: none; }
+
+@media print {
+  .cover { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .sec { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cov-top">
+    <div>
+      <div class="cov-brand">MK Coaching</div>
+    </div>
+    <div class="cov-conf">Confidential</div>
+  </div>
+  <div class="cov-mid">
+    <div class="cov-title">Offer<br>Playbook.</div>
+    <div class="cov-rule"></div>
+    <div class="cov-label">Prepared for</div>
+    <div class="cov-name">${name}</div>
+    <div class="cov-date">${date}</div>
+  </div>
+  <div class="cov-foot">MK Coaching &nbsp;·&nbsp; fitbodiesbymk@gmail.com</div>
+</div>
+
+<div class="doc">
+
+  <div class="sec">
+    <div class="sec-eye">01 — Action Plan</div>
+    <div class="sec-title">Do This Today</div>
+    ${stepsHTML}
+  </div>
+
+  <div class="sec">
+    <div class="sec-eye">02 — Positioning</div>
+    <div class="sec-title">One-Sentence Pitch</div>
+    <div class="pitch">${p.pitch || '—'}</div>
+    <div class="sec-title" style="font-size:20px;margin-bottom:18px;">Offer Framework</div>
+    <div class="o-grid">
+      <div class="o-cell"><div class="o-label">What to Call It</div><div class="o-val">${p.offerName || '—'}</div></div>
+      <div class="o-cell"><div class="o-label">Price Range</div><div class="o-val">${p.offerPrice || '—'}</div></div>
+      <div class="o-cell"><div class="o-label">Delivery Format</div><div class="o-val">${p.offerFormat || '—'}</div></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-eye">03 — Sales Engine</div>
+    <div class="sec-title">DM Starter Script</div>
+    <div class="dm-lbl">First Message</div>
+    <div class="dm-bbl">${p.dmOpener || '—'}</div>
+    <div class="dm-lbl">48-Hour Follow-Up</div>
+    <div class="dm-bbl">${p.dmFollowup || '—'}</div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-eye">04 — Sales Engine</div>
+    <div class="sec-title">Sales Call Blueprint</div>
+    <div class="beat"><div class="beat-ph">Open</div><div class="beat-tx">${p.callOpener || '—'}</div></div>
+    <div class="beat"><div class="beat-ph">Explore</div><div class="beat-tx">${p.callQ1 || '—'}</div></div>
+    <div class="beat"><div class="beat-ph">Qualify</div><div class="beat-tx">${p.callQ2 || '—'}</div></div>
+    <div class="beat"><div class="beat-ph">Close</div><div class="beat-tx">${p.callClose || '—'}</div></div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-eye">05 — Sales Engine</div>
+    <div class="sec-title">Handle Objections</div>
+    ${objHTML}
+  </div>
+
+  <div class="sec">
+    <div class="sec-eye">06 — Build Authority</div>
+    <div class="sec-title">Content This Week</div>
+    ${contentHTML}
+  </div>
+
+  <div class="sec">
+    <div class="sec-eye">07 — Build Authority</div>
+    <div class="sec-title">Weekly Checklist</div>
+    ${checkHTML}
+  </div>
+
+  <div class="sec">
+    <div class="sec-eye">08 — This Week's Move</div>
+    <div class="sec-title">The Conversation to Have</div>
+    <div class="convo">${p.conversation || '—'}</div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-eye" style="color:#3D5A4A;">What's Next</div>
+    <div class="sec-title">Your next move</div>
+    <div class="next-body">
+      Review this playbook and start with <strong>Do This Today</strong> — those five steps are your immediate focus.
+      Work through each section this week. The DM script and sales call blueprint are ready to use as-is.
+      When you're ready to go deeper, reach out.
+    </div>
+  </div>
+
+  <div class="doc-ft">
+    <span>MK Coaching &nbsp;·&nbsp; fitbodiesbymk@gmail.com</span>
+    <a href="https://fitbodiesbymk-pixel.github.io/builtbymk/">builtbymk.com</a>
+  </div>
+
+</div>
+</body>
+</html>`;
+  }
+
+  function savePDF() {
+    const btn  = document.getElementById('savePdfBtn');
+    const orig = btn.innerHTML;
+    btn.innerHTML = 'Building…';
+    btn.disabled  = true;
+
+    const p    = parsed;
+    const name = clientName || 'Client';
+    const date = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    // ─── SECTION BUILDERS ───
+    const stepsHTML = p.steps.map((s, i) => {
+      const tm = s.match(/\((\d+\s*min[^)]*)\)\s*$/i);
+      const ts = tm ? `<span class="t-time">(${tm[1]})</span>` : '';
+      const bt = tm ? s.slice(0, tm.index).trim() : s;
+      return `<div class="step"><div class="step-n">${i+1}</div><div class="step-t">${bt} ${ts}</div></div>`;
+    }).join('');
+
+    const objHTML = p.objections.map(o =>
+      `<div class="obj"><div class="obj-q">"${o.q}"</div><div class="obj-a">${o.a}</div></div>`
+    ).join('');
+
+    const contentHTML = p.content.map((c, i) =>
+      `<div class="c-item"><span class="c-n">${i+1}</span><span class="c-t">${c}</span></div>`
+    ).join('');
+
+    const checkHTML = p.checks.map(c =>
+      `<div class="chk"><span class="chk-box">☐</span><span>${c}</span></div>`
+    ).join('');
+
+    const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Offer Playbook — ${name}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: #fff; color: #1C1916; font-size: 14px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .doc { max-width: 660px; margin: 0 auto; padding: 52px 48px; }
+
+  /* Header */
+  .doc-head { display: flex; justify-content: space-between; align-items: flex-end; padding-bottom: 18px; border-bottom: 2px solid #1C1916; margin-bottom: 48px; }
+  .doc-brand { font-family: 'DM Serif Display', serif; font-size: 13px; color: #1C1916; }
+  .doc-sub { font-size: 12px; color: #7A7060; font-style: italic; }
+  .doc-date { font-size: 11px; color: #7A7060; letter-spacing: 0.05em; text-align: right; }
+  .doc-client { font-size: 11px; color: #A07840; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; text-align: right; }
+
+  /* Sections */
+  .sec { margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid #EAE6DE; }
+  .sec:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 22px; }
+  .sec-n { font-family: 'DM Serif Display', serif; font-size: 11px; color: #A07840; letter-spacing: 0.2em; min-width: 28px; }
+  .sec-title { font-family: 'DM Serif Display', serif; font-size: 21px; color: #1C1916; line-height: 1.2; }
+
+  /* Steps */
+  .step { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 16px; }
+  .step:last-child { margin-bottom: 0; }
+  .step-n { width: 24px; height: 24px; border-radius: 50%; background: #F5F0E8; border: 1px solid #DDD8CE; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: #A07840; flex-shrink: 0; margin-top: 3px; }
+  .step-t { font-size: 13.5px; color: #1C1916; line-height: 1.75; }
+  .t-time { color: #7A7060; font-size: 12px; }
+
+  /* Pitch */
+  .pitch { font-family: 'DM Serif Display', serif; font-size: 19px; line-height: 1.45; color: #3D5A4A; font-style: italic; border-left: 3px solid #A07840; padding: 16px 20px; background: #F8F5EF; margin-bottom: 24px; }
+
+  /* Offer grid */
+  .o-grid { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid #DDD8CE; }
+  .o-cell { padding: 16px 18px; border-right: 1px solid #DDD8CE; }
+  .o-cell:last-child { border-right: none; }
+  .o-label { font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #7A7060; margin-bottom: 6px; }
+  .o-val { font-size: 13px; color: #1C1916; line-height: 1.5; }
+
+  /* DM */
+  .dm-tag { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #7A7060; margin-bottom: 8px; margin-top: 20px; }
+  .dm-tag:first-child { margin-top: 0; }
+  .dm-msg { background: #F5F0E8; border: 1px solid #DDD8CE; border-radius: 2px 10px 10px 10px; padding: 13px 16px; font-size: 13px; line-height: 1.8; color: #1C1916; }
+
+  /* Call */
+  .beat { display: flex; gap: 16px; padding: 12px 0; border-bottom: 1px solid #EAE6DE; }
+  .beat:first-child { padding-top: 0; }
+  .beat:last-child { border-bottom: none; padding-bottom: 0; }
+  .beat-phase { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #A07840; min-width: 56px; padding-top: 2px; }
+  .beat-text { font-size: 13px; color: #1C1916; line-height: 1.7; }
+
+  /* Objections */
+  .obj { border: 1px solid #DDD8CE; margin-bottom: 10px; }
+  .obj:last-child { margin-bottom: 0; }
+  .obj-q { padding: 11px 15px; background: #F8F5EF; border-bottom: 1px solid #DDD8CE; font-size: 13px; color: #7A7060; font-style: italic; }
+  .obj-a { padding: 11px 15px; font-size: 13px; color: #1C1916; line-height: 1.7; }
+
+  /* Content */
+  .c-item { display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
+  .c-item:last-child { margin-bottom: 0; }
+  .c-n { font-family: 'DM Serif Display', serif; font-size: 26px; color: #DDD8CE; line-height: 1; flex-shrink: 0; }
+  .c-t { font-size: 13px; color: #1C1916; line-height: 1.75; padding-top: 4px; }
+
+  /* Checklist */
+  .chk { display: flex; gap: 12px; padding: 11px 0; border-bottom: 1px solid #EAE6DE; font-size: 13px; color: #1C1916; }
+  .chk:last-child { border-bottom: none; }
+  .chk-box { color: #A07840; font-size: 15px; flex-shrink: 0; }
+
+  /* Conversation */
+  .convo-text { font-size: 14px; color: #1C1916; line-height: 1.85; }
+
+  /* What's Next */
+  .whats-next-body { font-size: 13px; color: #7A7060; line-height: 1.85; }
+  .whats-next-body strong { color: #1C1916; }
+
+  /* Footer */
+  .doc-footer { border-top: 1px solid #DDD8CE; padding-top: 18px; margin-top: 44px; display: flex; justify-content: space-between; font-size: 11px; color: #7A7060; letter-spacing: 0.04em; }
+  .doc-footer a { color: #3D5A4A; text-decoration: none; }
+
+  @media print {
+    body { background: white; }
+    .sec { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <div class="doc-head">
+    <div>
+      <div class="doc-brand">MK Coaching</div>
+      <div class="doc-sub">Offer Playbook</div>
+    </div>
+    <div>
+      <div class="doc-client">${name}</div>
+      <div class="doc-date">${date}</div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-n">01</span><span class="sec-title">Do This Today</span></div>
+    ${stepsHTML}
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-n">02</span><span class="sec-title">Your Positioning</span></div>
+    <div class="pitch">${p.pitch || '—'}</div>
+    <div class="o-grid">
+      <div class="o-cell"><div class="o-label">What to Call It</div><div class="o-val">${p.offerName || '—'}</div></div>
+      <div class="o-cell"><div class="o-label">Price Range</div><div class="o-val">${p.offerPrice || '—'}</div></div>
+      <div class="o-cell"><div class="o-label">Delivery Format</div><div class="o-val">${p.offerFormat || '—'}</div></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-n">03</span><span class="sec-title">DM Starter Script</span></div>
+    <div class="dm-tag">First Message</div>
+    <div class="dm-msg">${p.dmOpener || '—'}</div>
+    <div class="dm-tag">48-Hour Follow-Up</div>
+    <div class="dm-msg">${p.dmFollowup || '—'}</div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-n">04</span><span class="sec-title">Sales Call Blueprint</span></div>
+    <div class="beat"><div class="beat-phase">Open</div><div class="beat-text">${p.callOpener || '—'}</div></div>
+    <div class="beat"><div class="beat-phase">Explore</div><div class="beat-text">${p.callQ1 || '—'}</div></div>
+    <div class="beat"><div class="beat-phase">Qualify</div><div class="beat-text">${p.callQ2 || '—'}</div></div>
+    <div class="beat"><div class="beat-phase">Close</div><div class="beat-text">${p.callClose || '—'}</div></div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-n">05</span><span class="sec-title">Handle Objections</span></div>
+    ${objHTML}
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-n">06</span><span class="sec-title">Content This Week</span></div>
+    ${contentHTML}
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-n">07</span><span class="sec-title">Weekly Checklist</span></div>
+    ${checkHTML}
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-n">08</span><span class="sec-title">The Conversation to Have</span></div>
+    <div class="convo-text">${p.conversation || '—'}</div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-n" style="color:#3D5A4A;">→</span><span class="sec-title">What's Next</span></div>
+    <div class="whats-next-body">
+      Review this playbook and start with <strong>Do This Today</strong> — those five steps are your immediate focus.
+      Work through each section this week. The DM script and sales call blueprint are ready to use as-is.
+      When you're ready to go deeper, reach out.
+    </div>
+  </div>
+
+  <div class="doc-footer">
+    <span>MK Coaching &nbsp;·&nbsp; fitbodiesbymk@gmail.com</span>
+    <a href="https://fitbodiesbymk-pixel.github.io/builtbymk/">builtbymk.com</a>
+  </div>
+
+</div>
+</body>
+</html>`;
+
+    const safeName = name.replace(/\s+/g, '-');
+    if (typeof html2pdf !== 'undefined') {
+      const container = document.createElement('div');
+      container.style.cssText = 'position:fixed;left:-9999px;top:0;width:794px;background:#fff;z-index:-1;';
+      container.innerHTML = html.replace(/^[\s\S]*<body[^>]*>/i, '').replace(/<\/body>[\s\S]*$/i, '');
+      document.body.appendChild(container);
+
+      html2pdf().set({
+        margin: 0,
+        filename: `Offer-Playbook-${safeName}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff', logging: false },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      }).from(container).save()
+        .then(() => { document.body.removeChild(container); })
+        .catch(() => { document.body.removeChild(container); fallbackDownload(html, safeName); })
+        .finally(() => { btn.innerHTML = orig; btn.disabled = false; });
+    } else {
+      fallbackDownload(html, safeName);
+      btn.innerHTML = orig;
+      btn.disabled  = false;
+    }
+  }
+
+  function fallbackDownload(html, safeName) {
+    const a = document.createElement('a');
+    a.href     = 'data:text/html;charset=utf-8,' + encodeURIComponent(html);
+    a.download = `Offer-Playbook-${safeName}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  function copyDM() {
+    const text = `First Message:\n${document.getElementById('dmOpener').textContent}\n\n48-Hour Follow-Up:\n${document.getElementById('dmFollowup').textContent}`;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.querySelector('.btn-copy-dm');
+      const orig = btn.textContent;
+      btn.textContent = '✓ Copied';
+      setTimeout(() => btn.textContent = orig, 2000);
+    });
+  }
+
+  // ─── SEND TO MK ───
+  function sendToMK() {
+    const p    = parsed;
+    const name = clientName || 'Client';
+    let body   = `OFFER PLAYBOOK — ${name} — ${now.toLocaleDateString('en-GB')}\n\n`;
+    body += `Focus: ${p.focusType || '—'} · Stage: ${p.stage || '—'} · ${p.timeInv || '—'}\n\n`;
+    body += `DO THIS TODAY\n${p.steps?.map((s, i) => `${i+1}. ${s}`).join('\n\n') || '—'}\n\n`;
+    body += `PITCH\n${p.pitch || '—'}\n\n`;
+    body += `OFFER FRAMEWORK\nName: ${p.offerName || '—'}\nPrice: ${p.offerPrice || '—'}\nFormat: ${p.offerFormat || '—'}\n\n`;
+    body += `DM SCRIPT\nFirst: ${p.dmOpener || '—'}\nFollow-up: ${p.dmFollowup || '—'}\n\n`;
+    body += `SALES CALL\nOpen: ${p.callOpener || '—'}\nExplore: ${p.callQ1 || '—'}\nQualify: ${p.callQ2 || '—'}\nClose: ${p.callClose || '—'}\n\n`;
+    body += `OBJECTIONS\n`;
+    p.objections?.forEach(o => { body += `"${o.q}" → ${o.a}\n\n`; });
+    body += `CONTENT\n`;
+    p.content?.forEach((c, i) => { body += `${i+1}. ${c}\n`; });
+    body += `\nCHECKLIST\n`;
+    p.checks?.forEach(c => { body += `- ${c}\n`; });
+    body += `\nTHE CONVERSATION\n${p.conversation || '—'}\n\n---\nINTAKE ANSWERS\n\n`;
+    QUESTIONS.forEach((q, i) => { body += `Q${i+1}: ${q.text}\n${answers[i] || '(no answer)'}\n\n`; });
+
+    const fd = new FormData();
+    fd.append('_subject', `Offer Playbook — ${name}`);
+    fd.append('name', name);
+    fd.append('plan', body);
+
+    fetch('https://formspree.io/f/mvzywykn', {
+      method: 'POST', body: fd, headers: { 'Accept': 'application/json' }
+    }).then(res => {
+      const el = document.getElementById('sendConfirm');
+      el.style.display = 'inline';
+      el.textContent = res.ok ? 'Sent to MK.' : 'Send failed — use Copy All instead.';
+    }).catch(() => {
+      const el = document.getElementById('sendConfirm');
+      el.style.display = 'inline';
+      el.textContent = 'Send failed — use Copy All instead.';
+    });
+  }
+
+  loadSaved();
+</script>
+</body>
+</html>
