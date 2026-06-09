@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offer Clarity Session — MK Coaching</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green:  #3D5A4A;
+    --gold:   #A07840;
+    --dark:   #1C1916;
+    --cream:  #F8F5EF;
+    --muted:  #7A7060;
+    --border: #DDD8CE;
+    --panel:  #F0EDE6;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--green);
+    color: #fff;
+    padding: 72px 24px 64px;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: clamp(36px, 6vw, 58px);
+    line-height: 1.1;
+    color: #fff;
+    max-width: 640px;
+    margin: 0 auto 20px;
+  }
+  .hero-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+  .hero-divider {
+    width: 40px;
+    height: 2px;
+    background: var(--gold);
+    margin: 28px auto 0;
+    border-radius: 2px;
+  }
+
+  /* ── PROGRESS ── */
+  .progress-wrap {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .progress-inner {
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 52px;
+  }
+  .progress-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .progress-bar {
+    flex: 1;
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-count {
+    font-size: 11px;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+
+  /* ── FORM BODY ── */
+  .form-body {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 56px 24px 80px;
+  }
+
+  /* ── QUESTION CARDS ── */
+  .q-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 32px 32px 28px;
+    margin-bottom: 24px;
+    transition: border-color 0.2s;
+  }
+  .q-card:focus-within {
+    border-color: var(--green);
+  }
+
+  .q-number {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .q-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 19px;
+    line-height: 1.35;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .q-hint {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 18px;
+  }
+  textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 14px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--dark);
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  textarea:focus {
+    border-color: var(--green);
+    background: #fff;
+  }
+  textarea::placeholder {
+    color: #B0A898;
+  }
+
+  /* ── NAME FIELD ── */
+  .name-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+  }
+  .name-field {
+    flex: 1;
+    min-width: 200px;
+  }
+  .name-field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  input[type="text"],
+  input[type="email"] {
+    width: 100%;
+    padding: 12px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--dark);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="text"]:focus,
+  input[type="email"]:focus {
+    border-color: var(--green);
+  }
+
+  /* ── SUBMIT ── */
+  .submit-wrap {
+    text-align: center;
+    padding-top: 8px;
+  }
+  .btn-submit {
+    display: inline-block;
+    background: var(--green);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 16px 48px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.2s, opacity 0.2s;
+  }
+  .btn-submit:hover { background: #2f4538; }
+  .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+  .submit-note {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── THANK YOU ── */
+  #screen-thanks {
+    display: none;
+    max-width: 580px;
+    margin: 0 auto;
+    padding: 80px 24px 80px;
+    text-align: center;
+  }
+  .thanks-icon {
+    width: 56px;
+    height: 56px;
+    background: var(--green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 28px;
+    color: #fff;
+    font-size: 22px;
+  }
+  .thanks-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 34px;
+    line-height: 1.2;
+    color: var(--dark);
+    margin-bottom: 16px;
+  }
+  .thanks-body {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 420px;
+    margin: 0 auto 36px;
+  }
+  .thanks-body strong { color: var(--dark); }
+
+  /* ── ERROR ── */
+  .error-msg {
+    display: none;
+    background: #FFF4F0;
+    border: 1px solid #F5C6B8;
+    color: #8B3A2A;
+    font-size: 13px;
+    padding: 12px 16px;
+    border-radius: 2px;
+    margin-top: 16px;
+    text-align: center;
+  }
+  .error-msg.show { display: block; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 24px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  footer a { color: var(--green); text-decoration: none; }
+
+  @media (max-width: 520px) {
+    .hero { padding: 52px 20px 48px; }
+    .q-card { padding: 24px 20px 20px; }
+    .name-card { padding: 20px; }
+    .form-body { padding: 36px 16px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="screen-form">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">MK Coaching</div>
+    <h1>Let's Build Your Offer.</h1>
+    <p class="hero-sub">Five questions. No fluff. MK will use your answers to build a personalised offer playbook — your action plan, pitch, scripts, and strategy in one document.</p>
+    <div class="hero-divider"></div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap" id="progressWrap">
+    <div class="progress-inner">
+      <span class="progress-label">Progress</span>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <span class="progress-count" id="progressCount">0 / 5</span>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <form id="intakeForm" novalidate>
+    <div class="form-body">
+
+      <!-- NAME + EMAIL -->
+      <div class="name-card">
+        <div class="name-field">
+          <label for="clientName">Your name</label>
+          <input type="text" id="clientName" name="name" placeholder="First name is fine" required>
+        </div>
+        <div class="name-field">
+          <label for="clientEmail">Your email</label>
+          <input type="email" id="clientEmail" name="email" placeholder="Where MK can reach you" required>
+        </div>
+      </div>
+
+      <!-- Q1 -->
+      <div class="q-card">
+        <div class="q-number">Question 01</div>
+        <div class="q-text">What's your skill or area of expertise — the thing you've learned, applied, and seen real results from?</div>
+        <div class="q-hint">Don't be modest. What do you actually know how to do, and where have you seen it work?</div>
+        <textarea name="q1" id="q1" placeholder="e.g. fitness coaching, digital marketing, financial planning, sales…" required></textarea>
+      </div>
+
+      <!-- Q2 -->
+      <div class="q-card">
+        <div class="q-number">Question 02</div>
+        <div class="q-text">Who specifically do you want to help — describe the actual person, not a category.</div>
+        <div class="q-hint">Age, situation, what they're struggling with, what they've tried. The more specific, the better the plan.</div>
+        <textarea name="q2" id="q2" placeholder="e.g. women in their 40s who've tried every diet and feel stuck…" required></textarea>
+      </div>
+
+      <!-- Q3 -->
+      <div class="q-card">
+        <div class="q-number">Question 03</div>
+        <div class="q-text">What's your current situation — audience, offer, paying clients, or starting from zero?</div>
+        <div class="q-hint">Be honest about where you're actually at. No judgment — the plan needs to fit your real starting point.</div>
+        <textarea name="q3" id="q3" placeholder="e.g. small Instagram following, no paid clients yet, one idea I haven't launched…" required></textarea>
+      </div>
+
+      <!-- Q4 -->
+      <div class="q-card">
+        <div class="q-number">Question 04</div>
+        <div class="q-text">What have you already tried that hasn't worked, and what do you think got in the way?</div>
+        <div class="q-hint">Past attempts tell us more than future plans. What happened and why did it stall?</div>
+        <textarea name="q4" id="q4" placeholder="e.g. built a course nobody bought, started a newsletter then stopped…" required></textarea>
+      </div>
+
+      <!-- Q5 -->
+      <div class="q-card">
+        <div class="q-number">Question 05</div>
+        <div class="q-text">What would feel like a real win for you in the next 7 days?</div>
+        <div class="q-hint">Not a dream — a real, achievable thing that would make you feel like this is actually moving.</div>
+        <textarea name="q5" id="q5" placeholder="e.g. one paid client, a clear offer written down, 10 new followers who match my audience…" required></textarea>
+      </div>
+
+      <!-- SUBMIT -->
+      <div class="submit-wrap">
+        <button type="submit" class="btn-submit" id="submitBtn">Send My Answers →</button>
+        <p class="submit-note">MK will review your answers and send your personalised playbook within 48 hours.</p>
+        <div class="error-msg" id="errorMsg">Something went wrong — please try again or email fitbodiesbymk@gmail.com directly.</div>
+      </div>
+
+    </div>
+  </form>
+
+</div>
+
+<!-- THANK YOU -->
+<div id="screen-thanks">
+  <div class="thanks-icon">✓</div>
+  <h2 class="thanks-title">Answers received.</h2>
+  <p class="thanks-body">MK has everything needed to build your playbook. Expect it in your inbox within <strong>48 hours</strong> — along with a note on next steps.</p>
+  <p class="thanks-body" style="margin-bottom:0;">In the meantime, no prep needed. Just sit tight.</p>
+</div>
+
+<footer>
+  <span>MK Coaching &nbsp;·&nbsp; <a href="mailto:fitbodiesbymk@gmail.com">fitbodiesbymk@gmail.com</a></span>
+</footer>
+
+<script>
+  const allTextareas = document.querySelectorAll('textarea');
+  const fill         = document.getElementById('progressFill');
+  const count        = document.getElementById('progressCount');
+
+  function updateProgress() {
+    const filled = [...allTextareas].filter(t => t.value.trim().length > 0).length;
+    const pct    = Math.round((filled / allTextareas.length) * 100);
+    fill.style.width  = pct + '%';
+    count.textContent = filled + ' / ' + allTextareas.length;
+  }
+
+  allTextareas.forEach(t => t.addEventListener('input', updateProgress));
+
+  document.getElementById('intakeForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const btn      = document.getElementById('submitBtn');
+    const errorMsg = document.getElementById('errorMsg');
+    const name     = document.getElementById('clientName').value.trim();
+    const email    = document.getElementById('clientEmail').value.trim();
+    const q1       = document.getElementById('q1').value.trim();
+    const q2       = document.getElementById('q2').value.trim();
+    const q3       = document.getElementById('q3').value.trim();
+    const q4       = document.getElementById('q4').value.trim();
+    const q5       = document.getElementById('q5').value.trim();
+
+    if (!name || !email || !q1 || !q2 || !q3 || !q4 || !q5) {
+      errorMsg.textContent = 'Please fill in all fields before submitting.';
+      errorMsg.classList.add('show');
+      errorMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    btn.textContent = 'Sending…';
+    btn.disabled    = true;
+    errorMsg.classList.remove('show');
+
+    const body = `OFFER CLARITY INTAKE\n\nName: ${name}\nEmail: ${email}\n\n` +
+      `Q1 — Skill / Expertise:\n${q1}\n\n` +
+      `Q2 — Who they want to help:\n${q2}\n\n` +
+      `Q3 — Current situation:\n${q3}\n\n` +
+      `Q4 — What hasn't worked:\n${q4}\n\n` +
+      `Q5 — Win in 7 days:\n${q5}`;
+
+    const fd = new FormData();
+    fd.append('_subject', `Offer Clarity Intake — ${name}`);
+    fd.append('name',  name);
+    fd.append('email', email);
+    fd.append('intake', body);
+
+    try {
+      const res = await fetch('https://formspree.io/f/mvzywykn', {
+        method: 'POST',
+        body: fd,
+        headers: { Accept: 'application/json' }
+      });
+
+      if (res.ok) {
+        document.getElementById('screen-form').style.display  = 'none';
+        document.getElementById('screen-thanks').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        throw new Error('non-ok response');
+      }
+    } catch {
+      errorMsg.textContent = 'Something went wrong — please try again or email fitbodiesbymk@gmail.com directly.';
+      errorMsg.classList.add('show');
+      btn.textContent = 'Send My Answers →';
+      btn.disabled    = false;
+    }
+  });
+</script>
+</body>
+</html>
