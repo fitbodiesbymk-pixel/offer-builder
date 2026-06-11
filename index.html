@@ -7,7 +7,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -1049,28 +1048,34 @@ Rules:
 <title>Offer Playbook — ${name}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'DM Sans', sans-serif; background: #fff; color: #1C1916; font-size: 14px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+body { font-family: 'DM Sans', sans-serif; background: #fff; color: #1C1916; font-size: 14px; line-height: 1.7; -webkit-font-smoothing: antialiased; padding-top: 52px; }
+
+/* PRINT BAR */
+.print-bar { position: fixed; top: 0; left: 0; right: 0; background: #1B5738; color: #fff; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 13px; z-index: 100; }
+.print-bar span { color: rgba(255,255,255,0.65); font-size: 12px; letter-spacing: 0.04em; }
+.print-bar button { background: #B09050; color: #fff; border: none; padding: 9px 22px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; cursor: pointer; border-radius: 2px; }
+.print-bar button:hover { background: #9a6c3a; }
 
 /* COVER */
 .cover {
   width: 100%; height: 1122px;
-  background: #3D5A4A;
+  background: #1B5738;
   padding: 64px 72px;
   display: flex; flex-direction: column; justify-content: space-between;
   -webkit-print-color-adjust: exact; print-color-adjust: exact;
   page-break-after: always;
 }
 .cov-top { display: flex; justify-content: space-between; align-items: flex-start; }
-.cov-brand { font-family: 'DM Serif Display', serif; font-size: 14px; color: rgba(255,255,255,0.6); letter-spacing: 0.06em; }
+.cov-brand { font-family: 'Cormorant Garamond', serif; font-size: 14px; color: rgba(255,255,255,0.6); letter-spacing: 0.06em; }
 .cov-conf { font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 0.06em; margin-top: 4px; }
 .cov-mid { }
-.cov-title { font-family: 'DM Serif Display', serif; font-size: 86px; line-height: 0.88; color: #fff; font-style: italic; margin-bottom: 44px; }
-.cov-rule { width: 52px; height: 2px; background: #A07840; margin-bottom: 32px; }
+.cov-title { font-family: 'Cormorant Garamond', serif; font-size: 86px; line-height: 0.88; color: #fff; font-style: italic; margin-bottom: 44px; }
+.cov-rule { width: 52px; height: 2px; background: #B09050; margin-bottom: 32px; }
 .cov-label { font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 10px; }
-.cov-name { font-family: 'DM Serif Display', serif; font-size: 34px; color: #fff; margin-bottom: 12px; }
+.cov-name { font-family: 'Cormorant Garamond', serif; font-size: 34px; color: #fff; margin-bottom: 12px; }
 .cov-date { font-size: 13px; color: rgba(255,255,255,0.5); }
 .cov-foot { font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 0.05em; }
 
@@ -1080,18 +1085,18 @@ body { font-family: 'DM Sans', sans-serif; background: #fff; color: #1C1916; fon
 /* SECTIONS */
 .sec { margin-bottom: 52px; padding-bottom: 52px; border-bottom: 1px solid #EAE6DE; }
 .sec:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-.sec-eye { font-size: 10px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: #A07840; margin-bottom: 8px; }
-.sec-title { font-family: 'DM Serif Display', serif; font-size: 26px; color: #1C1916; line-height: 1.15; margin-bottom: 26px; }
+.sec-eye { font-size: 10px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: #B09050; margin-bottom: 8px; }
+.sec-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: #1C1916; line-height: 1.15; margin-bottom: 26px; }
 
 /* STEPS */
 .step { display: flex; gap: 16px; margin-bottom: 20px; align-items: flex-start; }
 .step:last-child { margin-bottom: 0; }
-.step-n { width: 28px; height: 28px; border-radius: 50%; background: #F5F0E8; border: 1px solid #DDD8CE; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: #A07840; flex-shrink: 0; margin-top: 3px; }
+.step-n { width: 28px; height: 28px; border-radius: 50%; background: #F5F0E8; border: 1px solid #DDD8CE; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: #B09050; flex-shrink: 0; margin-top: 3px; }
 .step-t { font-size: 14px; color: #1C1916; line-height: 1.75; }
 .t-time { color: #7A7060; font-size: 12px; }
 
 /* PITCH */
-.pitch { font-family: 'DM Serif Display', serif; font-size: 22px; line-height: 1.45; color: #3D5A4A; font-style: italic; border-left: 3px solid #A07840; padding: 18px 22px; background: #F5F0E8; margin-bottom: 28px; }
+.pitch { font-family: 'Cormorant Garamond', serif; font-size: 22px; line-height: 1.45; color: #1B5738; font-style: italic; border-left: 3px solid #B09050; padding: 18px 22px; background: #F5F0E8; margin-bottom: 28px; }
 
 /* OFFER GRID */
 .o-grid { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid #DDD8CE; }
@@ -1109,7 +1114,7 @@ body { font-family: 'DM Sans', sans-serif; background: #fff; color: #1C1916; fon
 .beat { display: flex; gap: 18px; padding: 14px 0; border-bottom: 1px solid #EAE6DE; align-items: flex-start; }
 .beat:first-child { padding-top: 0; }
 .beat:last-child { border-bottom: none; padding-bottom: 0; }
-.beat-ph { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #3D5A4A; min-width: 58px; padding-top: 2px; flex-shrink: 0; }
+.beat-ph { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #1B5738; min-width: 58px; padding-top: 2px; flex-shrink: 0; }
 .beat-tx { font-size: 13px; color: #1C1916; line-height: 1.75; }
 
 /* OBJECTIONS */
@@ -1121,13 +1126,13 @@ body { font-family: 'DM Sans', sans-serif; background: #fff; color: #1C1916; fon
 /* CONTENT */
 .c-row { display: flex; gap: 16px; margin-bottom: 16px; align-items: flex-start; }
 .c-row:last-child { margin-bottom: 0; }
-.c-n { font-family: 'DM Serif Display', serif; font-size: 30px; color: #DDD8CE; line-height: 1; flex-shrink: 0; }
+.c-n { font-family: 'Cormorant Garamond', serif; font-size: 30px; color: #DDD8CE; line-height: 1; flex-shrink: 0; }
 .c-t { font-size: 13px; color: #1C1916; line-height: 1.75; padding-top: 4px; }
 
 /* CHECKLIST */
 .chk { display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid #EAE6DE; font-size: 13px; color: #1C1916; align-items: flex-start; }
 .chk:last-child { border-bottom: none; }
-.chk-box { color: #3D5A4A; font-size: 15px; flex-shrink: 0; line-height: 1.5; }
+.chk-box { color: #1B5738; font-size: 15px; flex-shrink: 0; line-height: 1.5; }
 
 /* CONVERSATION */
 .convo { font-size: 15px; color: #1C1916; line-height: 1.9; }
@@ -1138,9 +1143,11 @@ body { font-family: 'DM Sans', sans-serif; background: #fff; color: #1C1916; fon
 
 /* FOOTER */
 .doc-ft { border-top: 1px solid #DDD8CE; padding-top: 18px; margin-top: 52px; display: flex; justify-content: space-between; font-size: 11px; color: #7A7060; letter-spacing: 0.04em; }
-.doc-ft a { color: #3D5A4A; text-decoration: none; }
+.doc-ft a { color: #1B5738; text-decoration: none; }
 
 @media print {
+  .print-bar { display: none !important; }
+  body { padding-top: 0; }
   .cover { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .sec { page-break-inside: avoid; }
 }
@@ -1148,10 +1155,15 @@ body { font-family: 'DM Sans', sans-serif; background: #fff; color: #1C1916; fon
 </head>
 <body>
 
+<div class="print-bar">
+  <span>Offer Playbook — ${name}</span>
+  <button onclick="window.print()">Save as PDF →</button>
+</div>
+
 <div class="cover">
   <div class="cov-top">
     <div>
-      <div class="cov-brand">MK Coaching</div>
+      <div class="cov-brand">Rooted.</div>
     </div>
     <div class="cov-conf">Confidential</div>
   </div>
@@ -1162,7 +1174,7 @@ body { font-family: 'DM Sans', sans-serif; background: #fff; color: #1C1916; fon
     <div class="cov-name">${name}</div>
     <div class="cov-date">${date}</div>
   </div>
-  <div class="cov-foot">MK Coaching &nbsp;·&nbsp; fitbodiesbymk@gmail.com</div>
+  <div class="cov-foot">Rooted. &nbsp;·&nbsp; fitbodiesbymk@gmail.com</div>
 </div>
 
 <div class="doc">
@@ -1228,7 +1240,7 @@ body { font-family: 'DM Sans', sans-serif; background: #fff; color: #1C1916; fon
   </div>
 
   <div class="sec">
-    <div class="sec-eye" style="color:#3D5A4A;">What's Next</div>
+    <div class="sec-eye" style="color:#1B5738;">What's Next</div>
     <div class="sec-title">Your next move</div>
     <div class="next-body">
       Review this playbook and start with <strong>Do This Today</strong> — those five steps are your immediate focus.
@@ -1238,7 +1250,7 @@ body { font-family: 'DM Sans', sans-serif; background: #fff; color: #1C1916; fon
   </div>
 
   <div class="doc-ft">
-    <span>MK Coaching &nbsp;·&nbsp; fitbodiesbymk@gmail.com</span>
+    <span>Rooted. &nbsp;·&nbsp; fitbodiesbymk@gmail.com</span>
     <a href="https://fitbodiesbymk-pixel.github.io/builtbymk/">builtbymk.com</a>
   </div>
 
@@ -1248,239 +1260,11 @@ body { font-family: 'DM Sans', sans-serif; background: #fff; color: #1C1916; fon
   }
 
   function savePDF() {
-    const btn  = document.getElementById('savePdfBtn');
-    const orig = btn.innerHTML;
-    btn.innerHTML = 'Building…';
-    btn.disabled  = true;
-
-    const p    = parsed;
-    const name = clientName || 'Client';
-    const date = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-
-    // ─── SECTION BUILDERS ───
-    const stepsHTML = p.steps.map((s, i) => {
-      const tm = s.match(/\((\d+\s*min[^)]*)\)\s*$/i);
-      const ts = tm ? `<span class="t-time">(${tm[1]})</span>` : '';
-      const bt = tm ? s.slice(0, tm.index).trim() : s;
-      return `<div class="step"><div class="step-n">${i+1}</div><div class="step-t">${bt} ${ts}</div></div>`;
-    }).join('');
-
-    const objHTML = p.objections.map(o =>
-      `<div class="obj"><div class="obj-q">"${o.q}"</div><div class="obj-a">${o.a}</div></div>`
-    ).join('');
-
-    const contentHTML = p.content.map((c, i) =>
-      `<div class="c-item"><span class="c-n">${i+1}</span><span class="c-t">${c}</span></div>`
-    ).join('');
-
-    const checkHTML = p.checks.map(c =>
-      `<div class="chk"><span class="chk-box">☐</span><span>${c}</span></div>`
-    ).join('');
-
-    const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Offer Playbook — ${name}</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'DM Sans', sans-serif; background: #fff; color: #1C1916; font-size: 14px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
-  .doc { max-width: 660px; margin: 0 auto; padding: 52px 48px; }
-
-  /* Header */
-  .doc-head { display: flex; justify-content: space-between; align-items: flex-end; padding-bottom: 18px; border-bottom: 2px solid #1C1916; margin-bottom: 48px; }
-  .doc-brand { font-family: 'DM Serif Display', serif; font-size: 13px; color: #1C1916; }
-  .doc-sub { font-size: 12px; color: #7A7060; font-style: italic; }
-  .doc-date { font-size: 11px; color: #7A7060; letter-spacing: 0.05em; text-align: right; }
-  .doc-client { font-size: 11px; color: #A07840; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; text-align: right; }
-
-  /* Sections */
-  .sec { margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid #EAE6DE; }
-  .sec:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 22px; }
-  .sec-n { font-family: 'DM Serif Display', serif; font-size: 11px; color: #A07840; letter-spacing: 0.2em; min-width: 28px; }
-  .sec-title { font-family: 'DM Serif Display', serif; font-size: 21px; color: #1C1916; line-height: 1.2; }
-
-  /* Steps */
-  .step { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 16px; }
-  .step:last-child { margin-bottom: 0; }
-  .step-n { width: 24px; height: 24px; border-radius: 50%; background: #F5F0E8; border: 1px solid #DDD8CE; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: #A07840; flex-shrink: 0; margin-top: 3px; }
-  .step-t { font-size: 13.5px; color: #1C1916; line-height: 1.75; }
-  .t-time { color: #7A7060; font-size: 12px; }
-
-  /* Pitch */
-  .pitch { font-family: 'DM Serif Display', serif; font-size: 19px; line-height: 1.45; color: #3D5A4A; font-style: italic; border-left: 3px solid #A07840; padding: 16px 20px; background: #F8F5EF; margin-bottom: 24px; }
-
-  /* Offer grid */
-  .o-grid { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid #DDD8CE; }
-  .o-cell { padding: 16px 18px; border-right: 1px solid #DDD8CE; }
-  .o-cell:last-child { border-right: none; }
-  .o-label { font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #7A7060; margin-bottom: 6px; }
-  .o-val { font-size: 13px; color: #1C1916; line-height: 1.5; }
-
-  /* DM */
-  .dm-tag { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #7A7060; margin-bottom: 8px; margin-top: 20px; }
-  .dm-tag:first-child { margin-top: 0; }
-  .dm-msg { background: #F5F0E8; border: 1px solid #DDD8CE; border-radius: 2px 10px 10px 10px; padding: 13px 16px; font-size: 13px; line-height: 1.8; color: #1C1916; }
-
-  /* Call */
-  .beat { display: flex; gap: 16px; padding: 12px 0; border-bottom: 1px solid #EAE6DE; }
-  .beat:first-child { padding-top: 0; }
-  .beat:last-child { border-bottom: none; padding-bottom: 0; }
-  .beat-phase { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #A07840; min-width: 56px; padding-top: 2px; }
-  .beat-text { font-size: 13px; color: #1C1916; line-height: 1.7; }
-
-  /* Objections */
-  .obj { border: 1px solid #DDD8CE; margin-bottom: 10px; }
-  .obj:last-child { margin-bottom: 0; }
-  .obj-q { padding: 11px 15px; background: #F8F5EF; border-bottom: 1px solid #DDD8CE; font-size: 13px; color: #7A7060; font-style: italic; }
-  .obj-a { padding: 11px 15px; font-size: 13px; color: #1C1916; line-height: 1.7; }
-
-  /* Content */
-  .c-item { display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
-  .c-item:last-child { margin-bottom: 0; }
-  .c-n { font-family: 'DM Serif Display', serif; font-size: 26px; color: #DDD8CE; line-height: 1; flex-shrink: 0; }
-  .c-t { font-size: 13px; color: #1C1916; line-height: 1.75; padding-top: 4px; }
-
-  /* Checklist */
-  .chk { display: flex; gap: 12px; padding: 11px 0; border-bottom: 1px solid #EAE6DE; font-size: 13px; color: #1C1916; }
-  .chk:last-child { border-bottom: none; }
-  .chk-box { color: #A07840; font-size: 15px; flex-shrink: 0; }
-
-  /* Conversation */
-  .convo-text { font-size: 14px; color: #1C1916; line-height: 1.85; }
-
-  /* What's Next */
-  .whats-next-body { font-size: 13px; color: #7A7060; line-height: 1.85; }
-  .whats-next-body strong { color: #1C1916; }
-
-  /* Footer */
-  .doc-footer { border-top: 1px solid #DDD8CE; padding-top: 18px; margin-top: 44px; display: flex; justify-content: space-between; font-size: 11px; color: #7A7060; letter-spacing: 0.04em; }
-  .doc-footer a { color: #3D5A4A; text-decoration: none; }
-
-  @media print {
-    body { background: white; }
-    .sec { page-break-inside: avoid; }
-  }
-</style>
-</head>
-<body>
-<div class="doc">
-
-  <div class="doc-head">
-    <div>
-      <div class="doc-brand">MK Coaching</div>
-      <div class="doc-sub">Offer Playbook</div>
-    </div>
-    <div>
-      <div class="doc-client">${name}</div>
-      <div class="doc-date">${date}</div>
-    </div>
-  </div>
-
-  <div class="sec">
-    <div class="sec-head"><span class="sec-n">01</span><span class="sec-title">Do This Today</span></div>
-    ${stepsHTML}
-  </div>
-
-  <div class="sec">
-    <div class="sec-head"><span class="sec-n">02</span><span class="sec-title">Your Positioning</span></div>
-    <div class="pitch">${p.pitch || '—'}</div>
-    <div class="o-grid">
-      <div class="o-cell"><div class="o-label">What to Call It</div><div class="o-val">${p.offerName || '—'}</div></div>
-      <div class="o-cell"><div class="o-label">Price Range</div><div class="o-val">${p.offerPrice || '—'}</div></div>
-      <div class="o-cell"><div class="o-label">Delivery Format</div><div class="o-val">${p.offerFormat || '—'}</div></div>
-    </div>
-  </div>
-
-  <div class="sec">
-    <div class="sec-head"><span class="sec-n">03</span><span class="sec-title">DM Starter Script</span></div>
-    <div class="dm-tag">First Message</div>
-    <div class="dm-msg">${p.dmOpener || '—'}</div>
-    <div class="dm-tag">48-Hour Follow-Up</div>
-    <div class="dm-msg">${p.dmFollowup || '—'}</div>
-  </div>
-
-  <div class="sec">
-    <div class="sec-head"><span class="sec-n">04</span><span class="sec-title">Sales Call Blueprint</span></div>
-    <div class="beat"><div class="beat-phase">Open</div><div class="beat-text">${p.callOpener || '—'}</div></div>
-    <div class="beat"><div class="beat-phase">Explore</div><div class="beat-text">${p.callQ1 || '—'}</div></div>
-    <div class="beat"><div class="beat-phase">Qualify</div><div class="beat-text">${p.callQ2 || '—'}</div></div>
-    <div class="beat"><div class="beat-phase">Close</div><div class="beat-text">${p.callClose || '—'}</div></div>
-  </div>
-
-  <div class="sec">
-    <div class="sec-head"><span class="sec-n">05</span><span class="sec-title">Handle Objections</span></div>
-    ${objHTML}
-  </div>
-
-  <div class="sec">
-    <div class="sec-head"><span class="sec-n">06</span><span class="sec-title">Content This Week</span></div>
-    ${contentHTML}
-  </div>
-
-  <div class="sec">
-    <div class="sec-head"><span class="sec-n">07</span><span class="sec-title">Weekly Checklist</span></div>
-    ${checkHTML}
-  </div>
-
-  <div class="sec">
-    <div class="sec-head"><span class="sec-n">08</span><span class="sec-title">The Conversation to Have</span></div>
-    <div class="convo-text">${p.conversation || '—'}</div>
-  </div>
-
-  <div class="sec">
-    <div class="sec-head"><span class="sec-n" style="color:#3D5A4A;">→</span><span class="sec-title">What's Next</span></div>
-    <div class="whats-next-body">
-      Review this playbook and start with <strong>Do This Today</strong> — those five steps are your immediate focus.
-      Work through each section this week. The DM script and sales call blueprint are ready to use as-is.
-      When you're ready to go deeper, reach out.
-    </div>
-  </div>
-
-  <div class="doc-footer">
-    <span>MK Coaching &nbsp;·&nbsp; fitbodiesbymk@gmail.com</span>
-    <a href="https://fitbodiesbymk-pixel.github.io/builtbymk/">builtbymk.com</a>
-  </div>
-
-</div>
-</body>
-</html>`;
-
-    const safeName = name.replace(/\s+/g, '-');
-    if (typeof html2pdf !== 'undefined') {
-      const container = document.createElement('div');
-      container.style.cssText = 'position:fixed;left:-9999px;top:0;width:794px;background:#fff;z-index:-1;';
-      container.innerHTML = html.replace(/^[\s\S]*<body[^>]*>/i, '').replace(/<\/body>[\s\S]*$/i, '');
-      document.body.appendChild(container);
-
-      html2pdf().set({
-        margin: 0,
-        filename: `Offer-Playbook-${safeName}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff', logging: false },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      }).from(container).save()
-        .then(() => { document.body.removeChild(container); })
-        .catch(() => { document.body.removeChild(container); fallbackDownload(html, safeName); })
-        .finally(() => { btn.innerHTML = orig; btn.disabled = false; });
-    } else {
-      fallbackDownload(html, safeName);
-      btn.innerHTML = orig;
-      btn.disabled  = false;
-    }
-  }
-
-  function fallbackDownload(html, safeName) {
-    const a = document.createElement('a');
-    a.href     = 'data:text/html;charset=utf-8,' + encodeURIComponent(html);
-    a.download = `Offer-Playbook-${safeName}.html`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    const html = buildExportDoc();
+    const blob = new Blob([html], { type: 'text/html' });
+    const url  = URL.createObjectURL(blob);
+    const win  = window.open(url, '_blank');
+    if (!win) { alert('Please allow pop-ups for this site to open the document.'); }
   }
 
   function copyDM() {
