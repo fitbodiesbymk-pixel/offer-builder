@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Offer Playbook Session — Rooted.</title>
+  <title>From Unclear to Bookable — Rooted.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
@@ -27,192 +27,139 @@
     /* ── NAV ── */
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: var(--cream);
-      border-bottom: 1px solid var(--border);
-      padding: 0 40px;
-      display: flex; justify-content: space-between; align-items: center;
-      height: 62px;
+      background: var(--cream); border-bottom: 1px solid var(--border);
+      padding: 0 40px; display: flex; justify-content: space-between; align-items: center; height: 62px;
     }
-    .nav-brand { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--green); letter-spacing: 0.02em; }
-    .nav-cta {
-      background: var(--gold); color: #fff; border: none; border-radius: 50px;
-      padding: 10px 24px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
-      letter-spacing: 0.04em; cursor: pointer; transition: all .2s;
-    }
+    .nav-brand { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--green); }
+    .nav-cta { background: var(--gold); color: #fff; border: none; border-radius: 50px; padding: 10px 24px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; cursor: pointer; transition: all .2s; }
     .nav-cta:hover { background: var(--gold-dark); }
 
     /* ── HERO ── */
-    .hero {
-      background: var(--green);
-      padding: 88px 40px 96px;
-      text-align: center;
-    }
+    .hero { background: var(--green); padding: 88px 40px 96px; text-align: center; }
     .hero-inner { max-width: 860px; margin: 0 auto; }
-    .hero-eyebrow {
-      display: inline-block;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 50px;
-      padding: 6px 20px;
-      font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
-      color: rgba(255,255,255,0.6);
-      margin-bottom: 32px;
-    }
-    .hero h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(44px, 8vw, 80px);
-      line-height: 1.0;
-      color: #fff;
-      font-weight: 600;
-      margin-bottom: 28px;
-    }
+    .hero-eyebrow { display: inline-block; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 50px; padding: 6px 20px; font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 32px; }
+    .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(44px, 8vw, 82px); line-height: 0.98; color: #fff; font-weight: 600; margin-bottom: 28px; }
     .hero h1 em { font-style: italic; color: var(--gold); }
-    .hero-sub {
-      font-size: 17px; color: rgba(255,255,255,0.75);
-      max-width: 520px; margin: 0 auto 44px; line-height: 1.75;
-    }
-    .hero-btn {
-      display: inline-block;
-      background: var(--gold); color: #fff;
-      border-radius: 50px; padding: 17px 44px;
-      font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.04em;
-      border: none; cursor: pointer; transition: all .2s;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.2);
-    }
+    .hero-sub { font-size: 17px; color: rgba(255,255,255,0.75); max-width: 540px; margin: 0 auto 44px; line-height: 1.75; }
+    .hero-btn { display: inline-block; background: var(--gold); color: #fff; border-radius: 50px; padding: 17px 44px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.04em; border: none; cursor: pointer; transition: all .2s; box-shadow: 0 4px 24px rgba(0,0,0,0.2); }
     .hero-btn:hover { background: var(--gold-dark); transform: translateY(-2px); }
-    .hero-proof {
-      display: flex; justify-content: center; gap: 32px; flex-wrap: wrap;
-      margin-top: 22px;
-    }
-    .hero-proof-item {
-      font-size: 12px; color: rgba(255,255,255,0.45);
-      display: flex; align-items: center; gap: 7px;
-    }
+    .hero-proof { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-top: 22px; }
+    .hero-proof-item { font-size: 12px; color: rgba(255,255,255,0.45); display: flex; align-items: center; gap: 7px; }
     .hero-proof-item::before { content: '◆'; font-size: 5px; color: var(--gold); }
 
     /* ── TICKER ── */
-    .ticker {
-      background: var(--green-dark);
-      padding: 13px 0; overflow: hidden;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-    .ticker-track {
-      display: flex; white-space: nowrap;
-      animation: ticker-scroll 30s linear infinite;
-    }
-    .ticker-item {
-      font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
-      color: rgba(255,255,255,0.4); padding: 0 28px; flex-shrink: 0;
-    }
-    .ticker-item .dot { color: var(--gold); }
-    @keyframes ticker-scroll {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
+    .ticker { background: var(--green-dark); padding: 13px 0; overflow: hidden; border-top: 1px solid rgba(255,255,255,0.06); }
+    .ticker-track { display: flex; white-space: nowrap; animation: ticker-scroll 32s linear infinite; }
+    .ticker-item { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.4); padding: 0 28px; flex-shrink: 0; }
+    .ticker-dot { color: var(--gold); }
+    @keyframes ticker-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-    /* ── SHARED SECTION ── */
+    /* ── SHARED ── */
     .sec { padding: 88px 40px; }
-    .sec-inner { max-width: 900px; margin: 0 auto; }
-    .eyebrow {
-      font-size: 10px; font-weight: 600; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--gold); margin-bottom: 16px;
-    }
+    .sec-inner { max-width: 920px; margin: 0 auto; }
+    .eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
 
     /* ── PROBLEM ── */
     .sec-problem { background: var(--cream); }
     .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-    .problem-left h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(36px, 5vw, 54px); line-height: 1.08; color: var(--text);
-    }
+    .problem-left h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 54px); line-height: 1.08; }
     .problem-left h2 em { font-style: normal; color: var(--green); }
-    .problem-right { padding-top: 4px; }
-    .problem-bullet {
-      display: flex; align-items: flex-start; gap: 14px;
-      font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 16px;
-    }
+    .problem-bullet { display: flex; align-items: flex-start; gap: 14px; font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 16px; }
     .problem-bullet::before { content: '·'; color: var(--gold); font-size: 22px; line-height: 1.1; flex-shrink: 0; }
 
-    /* ── WHAT YOU GET ── */
-    .sec-wyg { background: var(--cream-alt); }
-    .wyg-header { text-align: center; margin-bottom: 44px; }
-    .wyg-header h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(34px, 5vw, 52px); line-height: 1.05; margin-bottom: 12px;
-    }
-    .wyg-header p { font-size: 15px; color: var(--muted); max-width: 480px; margin: 0 auto; line-height: 1.7; }
-    .wyg-card {
-      background: #fff; border: 1px solid var(--border); border-radius: 2px;
-      padding: 40px 44px;
-    }
-    .wyg-card-label {
-      font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--light); margin-bottom: 24px;
-    }
-    .wyg-items { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 40px; }
-    .wyg-item {
-      display: flex; align-items: flex-start; gap: 10px;
-      font-size: 13px; color: var(--text); line-height: 1.6;
-    }
-    .wyg-tick { color: var(--green); font-size: 13px; flex-shrink: 0; margin-top: 2px; }
+    /* ── OFFERS ── */
+    .sec-offers { background: var(--cream-alt); }
+    .offers-header { text-align: center; margin-bottom: 48px; }
+    .offers-header h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(34px, 5vw, 52px); line-height: 1.05; margin-bottom: 12px; }
+    .offers-header p { font-size: 15px; color: var(--muted); max-width: 480px; margin: 0 auto; line-height: 1.7; }
+    .offers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+    .offer-card { background: #fff; border: 1px solid var(--border); border-radius: 2px; overflow: hidden; }
+    .offer-card-hero { padding: 30px 32px 24px; border-bottom: 1px solid var(--border); }
+    .offer-tag { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; padding: 4px 12px; border-radius: 50px; margin-bottom: 16px; }
+    .offer-tag-1 { background: #F0F4F1; color: var(--green); }
+    .offer-tag-2 { background: #F5F0E8; color: var(--gold-dark); }
+    .offer-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--text); margin-bottom: 8px; line-height: 1.1; }
+    .offer-card-sub { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .offer-price-row { display: flex; align-items: baseline; gap: 8px; margin-top: 20px; }
+    .offer-price { font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 600; color: var(--text); line-height: 1; }
+    .offer-price-note { font-size: 12px; color: var(--light); }
+    .offer-card-body { padding: 24px 32px 28px; }
+    .offer-includes-label { font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--light); margin-bottom: 16px; }
+    .offer-item { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text); line-height: 1.6; margin-bottom: 12px; }
+    .offer-item:last-child { margin-bottom: 0; }
+    .offer-tick { color: var(--green); flex-shrink: 0; margin-top: 2px; font-size: 13px; }
+    .offer-cta { display: block; text-align: center; background: var(--green); color: #fff; border: none; border-radius: 2px; padding: 14px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; cursor: pointer; transition: all .2s; margin-top: 24px; }
+    .offer-cta:hover { background: var(--green-dark); }
+    .offer-cta-gold { background: var(--gold); }
+    .offer-cta-gold:hover { background: var(--gold-dark); }
+    .offer-delivery { font-size: 11px; color: var(--light); text-align: center; margin-top: 10px; letter-spacing: 0.04em; }
+    /* Grand slam card highlight */
+    .offer-card-featured { border: 2px solid var(--gold); position: relative; }
+    .offer-featured-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--gold); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 16px; border-radius: 50px; white-space: nowrap; }
 
     /* ── HOW IT WORKS ── */
     .sec-how { background: var(--green); }
     .sec-how .eyebrow { color: rgba(255,255,255,0.35); }
-    .how-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(34px, 5vw, 52px); color: #fff; margin-bottom: 48px; line-height: 1.05;
-    }
-    .how-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .how-step {
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 2px; padding: 30px 26px;
-    }
-    .how-n {
-      font-size: 10px; font-weight: 600; letter-spacing: 0.2em;
-      color: var(--gold); margin-bottom: 18px;
-    }
-    .how-step h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 24px; color: #fff; margin-bottom: 10px; font-weight: 600;
-    }
-    .how-step p { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.75; }
+    .how-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(34px, 5vw, 52px); color: #fff; margin-bottom: 48px; line-height: 1.05; }
+    .how-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .how-step { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 2px; padding: 26px 22px; }
+    .how-n { font-size: 10px; font-weight: 600; letter-spacing: 0.2em; color: var(--gold); margin-bottom: 14px; }
+    .how-step h3 { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: #fff; margin-bottom: 8px; font-weight: 600; }
+    .how-step p { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.7; }
+    .how-step-note { font-size: 11px; color: var(--gold); margin-top: 10px; font-style: italic; }
+
+    /* ── CASE STUDY ── */
+    .sec-case { background: var(--cream); }
+    .case-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+    .case-left h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4vw, 46px); line-height: 1.1; margin-bottom: 20px; }
+    .case-left p { font-size: 14px; color: var(--muted); line-height: 1.8; margin-bottom: 16px; }
+    .case-stat-row { display: flex; gap: 28px; margin-top: 28px; }
+    .case-stat { }
+    .case-stat-n { font-family: 'Cormorant Garamond', serif; font-size: 36px; color: var(--green); line-height: 1; margin-bottom: 4px; }
+    .case-stat-l { font-size: 11px; color: var(--muted); letter-spacing: 0.04em; }
+    .case-right { }
+    .case-mockup { background: var(--green); border-radius: 4px; overflow: hidden; box-shadow: 0 12px 48px rgba(0,0,0,0.15); }
+    .case-mockup-bar { background: rgba(0,0,0,0.2); padding: 10px 16px; display: flex; align-items: center; gap: 6px; }
+    .case-mockup-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.2); }
+    .case-mockup-url { font-size: 10px; color: rgba(255,255,255,0.4); margin-left: 8px; letter-spacing: 0.04em; }
+    .case-mockup-body { padding: 28px 24px 32px; }
+    .case-mockup-tag { font-size: 9px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 12px; }
+    .case-mockup-h { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: #fff; line-height: 1.1; margin-bottom: 10px; font-style: italic; }
+    .case-mockup-p { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 20px; }
+    .case-mockup-btn { display: inline-block; background: #F97316; color: #fff; border-radius: 50px; padding: 10px 22px; font-size: 12px; font-weight: 600; }
+    .case-badge { display: inline-flex; align-items: center; gap: 8px; background: #F0F4F1; border: 1px solid #C8DAD0; border-radius: 50px; padding: 6px 14px; font-size: 11px; color: var(--green); font-weight: 500; margin-top: 20px; }
+    .case-badge::before { content: '✓'; font-weight: 700; }
+
+    /* ── ABOUT ── */
+    .sec-about { background: var(--green); }
+    .about-grid { display: grid; grid-template-columns: 380px 1fr; gap: 64px; align-items: center; }
+    .about-img { width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: top; border-radius: 2px; filter: brightness(0.95); }
+    .sec-about .eyebrow { color: rgba(255,255,255,0.4); }
+    .about-right h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(34px, 4vw, 50px); color: #fff; line-height: 1.08; margin-bottom: 20px; }
+    .about-right p { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.85; margin-bottom: 16px; }
+    .about-right p:last-of-type { margin-bottom: 0; }
+    .about-right strong { color: #fff; font-weight: 500; }
+    .about-stats { display: flex; gap: 36px; margin-top: 32px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.12); }
+    .about-stat-n { font-family: 'Cormorant Garamond', serif; font-size: 38px; color: var(--gold); line-height: 1; margin-bottom: 4px; }
+    .about-stat-l { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.4; }
 
     /* ── WHO ── */
     .sec-who { background: var(--cream); }
-    .who-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(34px, 5vw, 52px); line-height: 1.08; margin-bottom: 36px; max-width: 580px;
-    }
+    .who-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(34px, 5vw, 52px); line-height: 1.08; margin-bottom: 36px; max-width: 580px; }
     .who-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-    .who-card {
-      background: #fff; border: 1px solid var(--border); border-radius: 2px;
-      padding: 20px 22px; font-size: 13px; color: var(--muted); line-height: 1.65;
-    }
+    .who-card { background: #fff; border: 1px solid var(--border); border-radius: 2px; padding: 20px 22px; font-size: 13px; color: var(--muted); line-height: 1.65; }
 
     /* ── BEFORE/AFTER ── */
     .sec-ba { background: var(--cream-alt); }
-    .ba-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(34px, 5vw, 52px); line-height: 1.08; margin-bottom: 36px;
-    }
+    .ba-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(34px, 5vw, 52px); line-height: 1.08; margin-bottom: 36px; }
     .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .ba-col {
-      background: #fff; border: 1px solid var(--border); border-radius: 2px; padding: 30px;
-    }
+    .ba-col { background: #fff; border: 1px solid var(--border); border-radius: 2px; padding: 30px; }
     .ba-before { border-top: 3px solid var(--border); }
-    .ba-after  { border-top: 3px solid var(--green); }
-    .ba-label {
-      font-size: 10px; font-weight: 600; letter-spacing: 0.2em;
-      text-transform: uppercase; margin-bottom: 20px;
-    }
+    .ba-after { border-top: 3px solid var(--green); }
+    .ba-label { font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 20px; }
     .ba-before .ba-label { color: var(--light); }
-    .ba-after  .ba-label { color: var(--green); }
-    .ba-item {
-      display: flex; align-items: flex-start; gap: 10px;
-      font-size: 13px; line-height: 1.7; margin-bottom: 12px; color: var(--muted);
-    }
+    .ba-after .ba-label { color: var(--green); }
+    .ba-item { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; line-height: 1.7; margin-bottom: 12px; color: var(--muted); }
     .ba-item:last-child { margin-bottom: 0; }
     .ba-after .ba-item { color: var(--text); }
     .ba-icon { flex-shrink: 0; margin-top: 2px; font-size: 12px; }
@@ -220,10 +167,7 @@
     /* ── FAQ ── */
     .sec-faq { background: var(--cream); }
     .faq-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 64px; align-items: start; }
-    .faq-left h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(40px, 5vw, 58px); line-height: 1.02;
-    }
+    .faq-left h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 5vw, 58px); line-height: 1.02; }
     .faq-item { padding: 22px 0; border-bottom: 1px solid var(--border); }
     .faq-item:first-child { border-top: 1px solid var(--border); }
     .faq-q { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 9px; line-height: 1.45; }
@@ -232,41 +176,32 @@
     /* ── FINAL CTA ── */
     .sec-cta { background: var(--green); text-align: center; padding: 104px 40px; }
     .sec-cta .eyebrow { color: rgba(255,255,255,0.35); }
-    .sec-cta h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(44px, 7vw, 72px); color: #fff;
-      font-style: italic; line-height: 1.0; margin-bottom: 18px;
-    }
+    .sec-cta h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(44px, 7vw, 72px); color: #fff; font-style: italic; line-height: 1.0; margin-bottom: 18px; }
     .sec-cta p { font-size: 15px; color: rgba(255,255,255,0.65); max-width: 440px; margin: 0 auto 42px; line-height: 1.75; }
-    .cta-btn {
-      display: inline-block; background: var(--gold); color: #fff;
-      border-radius: 50px; padding: 17px 48px;
-      font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.04em;
-      border: none; cursor: pointer; transition: all .2s;
-    }
+    .cta-btn { display: inline-block; background: var(--gold); color: #fff; border-radius: 50px; padding: 17px 48px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.04em; border: none; cursor: pointer; transition: all .2s; }
     .cta-btn:hover { background: var(--gold-dark); transform: translateY(-2px); }
     .cta-note { font-size: 12px; color: rgba(255,255,255,0.3); margin-top: 18px; }
 
     /* ── FOOTER ── */
-    footer {
-      background: #111; text-align: center;
-      padding: 22px; font-size: 12px; color: rgba(255,255,255,0.3);
-    }
+    footer { background: #111; text-align: center; padding: 22px; font-size: 12px; color: rgba(255,255,255,0.3); }
     footer a { color: rgba(255,255,255,0.45); }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 720px) {
+    @media (max-width: 800px) {
       nav { padding: 0 20px; }
       .sec { padding: 64px 20px; }
       .hero { padding: 64px 20px 72px; }
       .sec-cta { padding: 72px 20px; }
-      .problem-grid,
-      .how-steps,
-      .who-grid,
-      .ba-grid,
-      .faq-grid { grid-template-columns: 1fr; gap: 28px; }
-      .wyg-items { grid-template-columns: 1fr; }
-      .wyg-card { padding: 28px 24px; }
+      .problem-grid, .offers-grid, .how-steps, .case-grid, .about-grid, .ba-grid, .faq-grid { grid-template-columns: 1fr; gap: 28px; }
+      .who-grid { grid-template-columns: 1fr 1fr; }
+      .about-img { aspect-ratio: 4/3; }
+      .how-steps { grid-template-columns: 1fr 1fr; }
+      .about-stats { gap: 24px; }
+    }
+    @media (max-width: 480px) {
+      .who-grid { grid-template-columns: 1fr; }
+      .how-steps { grid-template-columns: 1fr; }
+      .case-stat-row { gap: 20px; }
     }
   </style>
 </head>
@@ -283,16 +218,16 @@
 <!-- HERO -->
 <div class="hero">
   <div class="hero-inner">
-    <div class="hero-eyebrow">✦ Offer Playbook Session</div>
-    <h1>Stop explaining<br>your offer. Start<br>sending a <em>document</em><br>that sells it for you.</h1>
-    <p class="hero-sub">A focused session where we turn what you do into a complete offer playbook — your pitch, your price, your scripts, and your action plan. In one polished document.</p>
+    <div class="hero-eyebrow">✦ Rooted. · Built for Coaches</div>
+    <h1>From "just check<br>my Instagram"<br>to <em>bookable.</em></h1>
+    <p class="hero-sub">Two offers for coaches who are great at what they do but invisible online. Get a clear offer, a professional presence, and scripts that close — in under two weeks.</p>
     <a href="https://calendly.com/fitbodiesbymk/discovery-call" target="_blank">
       <button class="hero-btn">Book your free Clarity Call →</button>
     </a>
     <div class="hero-proof">
       <span class="hero-proof-item">Free 30-min call</span>
       <span class="hero-proof-item">No commitment</span>
-      <span class="hero-proof-item">Playbook in your hands</span>
+      <span class="hero-proof-item">Real deliverables</span>
     </div>
   </div>
 </div>
@@ -301,21 +236,15 @@
 <div class="ticker">
   <div class="ticker-track">
     <span class="ticker-item">Now taking new clients</span>
-    <span class="ticker-item"><span class="dot">✦</span> Offer Playbook Session</span>
-    <span class="ticker-item"><span class="dot">✦</span> Book your free Clarity Call</span>
-    <span class="ticker-item"><span class="dot">✦</span> Rooted.</span>
-    <span class="ticker-item"><span class="dot">✦</span> Now taking new clients</span>
-    <span class="ticker-item"><span class="dot">✦</span> Offer Playbook Session</span>
-    <span class="ticker-item"><span class="dot">✦</span> Book your free Clarity Call</span>
-    <span class="ticker-item"><span class="dot">✦</span> Rooted.</span>
-    <span class="ticker-item"><span class="dot">✦</span> Now taking new clients</span>
-    <span class="ticker-item"><span class="dot">✦</span> Offer Playbook Session</span>
-    <span class="ticker-item"><span class="dot">✦</span> Book your free Clarity Call</span>
-    <span class="ticker-item"><span class="dot">✦</span> Rooted.</span>
-    <span class="ticker-item"><span class="dot">✦</span> Now taking new clients</span>
-    <span class="ticker-item"><span class="dot">✦</span> Offer Playbook Session</span>
-    <span class="ticker-item"><span class="dot">✦</span> Book your free Clarity Call</span>
-    <span class="ticker-item"><span class="dot">✦</span> Rooted.</span>
+    <span class="ticker-item"><span class="ticker-dot">✦</span> Offer Playbook Session · $297</span>
+    <span class="ticker-item"><span class="ticker-dot">✦</span> From Unclear to Bookable · $697</span>
+    <span class="ticker-item"><span class="ticker-dot">✦</span> Book your free Clarity Call</span>
+    <span class="ticker-item"><span class="ticker-dot">✦</span> Rooted.</span>
+    <span class="ticker-item"><span class="ticker-dot">✦</span> Now taking new clients</span>
+    <span class="ticker-item"><span class="ticker-dot">✦</span> Offer Playbook Session · $297</span>
+    <span class="ticker-item"><span class="ticker-dot">✦</span> From Unclear to Bookable · $697</span>
+    <span class="ticker-item"><span class="ticker-dot">✦</span> Book your free Clarity Call</span>
+    <span class="ticker-item"><span class="ticker-dot">✦</span> Rooted.</span>
   </div>
 </div>
 
@@ -325,41 +254,84 @@
     <div class="problem-grid">
       <div class="problem-left">
         <p class="eyebrow">The problem</p>
-        <h2>You're great at what you do. <em>Selling it</em> is the hard part.</h2>
+        <h2>You're good at what you do. You just don't <em>look like it</em> online.</h2>
       </div>
-      <div class="problem-right">
-        <div class="problem-bullet">You re-explain your offer in every new conversation — and it sounds different every time.</div>
-        <div class="problem-bullet">Your price changes depending on who's asking. It's a guess, not a decision.</div>
-        <div class="problem-bullet">Leads ask questions, get interested, then go quiet. You don't know why.</div>
-        <div class="problem-bullet">You have no script — just experience and personality. It works sometimes. Not always.</div>
-        <div class="problem-bullet">You're running on referrals and hoping for the best. There's no deliberate system.</div>
-        <div class="problem-bullet">You know what you offer. You just can't write it down in a way that lands.</div>
+      <div class="problem-right" style="padding-top:4px;">
+        <div class="problem-bullet">You tell people to "just check your Instagram" — and they go quiet.</div>
+        <div class="problem-bullet">Your offer changes depending on who's asking and what you think they can afford.</div>
+        <div class="problem-bullet">Leads get interested, say they'll think about it, then disappear.</div>
+        <div class="problem-bullet">You have no clean link to send — nothing that explains what you do and books the call.</div>
+        <div class="problem-bullet">You're running on referrals and word of mouth. There's no system behind it.</div>
+        <div class="problem-bullet">You know you're good. Proving it to someone who doesn't know you yet is the hard part.</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- WHAT YOU GET -->
-<div class="sec sec-wyg">
+<!-- THE TWO OFFERS -->
+<div class="sec sec-offers">
   <div class="sec-inner">
-    <div class="wyg-header">
-      <p class="eyebrow">✦ The deliverable</p>
-      <h2>Your Offer Playbook.</h2>
-      <p>A complete, personalised strategy document built from your answers. Not a template. Built from what you actually do.</p>
+    <div class="offers-header">
+      <p class="eyebrow">✦ The offers</p>
+      <h2>Two ways to work together.</h2>
+      <p>Start with clarity. Add the platform when you're ready. Both begin with a free Clarity Call.</p>
     </div>
-    <div class="wyg-card">
-      <p class="wyg-card-label">What's inside the playbook</p>
-      <div class="wyg-items">
-        <div class="wyg-item"><span class="wyg-tick">✓</span><span>5-step action plan — what to do this week</span></div>
-        <div class="wyg-item"><span class="wyg-tick">✓</span><span>Objection handles — the real ones, answered</span></div>
-        <div class="wyg-item"><span class="wyg-tick">✓</span><span>One-sentence pitch you can use anywhere</span></div>
-        <div class="wyg-item"><span class="wyg-tick">✓</span><span>Content ideas for this week</span></div>
-        <div class="wyg-item"><span class="wyg-tick">✓</span><span>Offer framework — name, price range, format</span></div>
-        <div class="wyg-item"><span class="wyg-tick">✓</span><span>Weekly accountability checklist</span></div>
-        <div class="wyg-item"><span class="wyg-tick">✓</span><span>DM opener + 48-hour follow-up script</span></div>
-        <div class="wyg-item"><span class="wyg-tick">✓</span><span>One high-value conversation to have this week</span></div>
-        <div class="wyg-item"><span class="wyg-tick">✓</span><span>Sales call blueprint — open, explore, qualify, close</span></div>
+    <div class="offers-grid">
+
+      <!-- OFFER 1 -->
+      <div class="offer-card">
+        <div class="offer-card-hero">
+          <span class="offer-tag offer-tag-1">Offer Playbook Session</span>
+          <h3>Your complete offer strategy. In one document.</h3>
+          <p class="offer-card-sub">A personalised playbook built from your answers — covering everything you need to position, price, and sell your coaching with confidence.</p>
+          <div class="offer-price-row">
+            <span class="offer-price">$297</span>
+            <span class="offer-price-note">one payment</span>
+          </div>
+        </div>
+        <div class="offer-card-body">
+          <p class="offer-includes-label">What's included</p>
+          <div class="offer-item"><span class="offer-tick">✓</span><span>5-step action plan — your exact next moves</span></div>
+          <div class="offer-item"><span class="offer-tick">✓</span><span>One-sentence pitch you can use anywhere</span></div>
+          <div class="offer-item"><span class="offer-tick">✓</span><span>Offer framework — name, price range, format</span></div>
+          <div class="offer-item"><span class="offer-tick">✓</span><span>DM opener + 48-hour follow-up script</span></div>
+          <div class="offer-item"><span class="offer-tick">✓</span><span>Sales call blueprint — open, explore, qualify, close</span></div>
+          <div class="offer-item"><span class="offer-tick">✓</span><span>Objection handles for the real pushbacks</span></div>
+          <div class="offer-item"><span class="offer-tick">✓</span><span>Content ideas + weekly checklist</span></div>
+          <a href="https://calendly.com/fitbodiesbymk/discovery-call" target="_blank">
+            <button class="offer-cta">Start with a free Clarity Call →</button>
+          </a>
+          <p class="offer-delivery">Playbook delivered within 48 hours of your intake form</p>
+        </div>
       </div>
+
+      <!-- OFFER 2 -->
+      <div class="offer-card offer-card-featured">
+        <div class="offer-featured-badge">Most popular</div>
+        <div class="offer-card-hero">
+          <span class="offer-tag offer-tag-2">From Unclear to Bookable</span>
+          <h3>Your offer strategy — plus the website that sells it.</h3>
+          <p class="offer-card-sub">Everything in the Playbook Session, plus a professional one-page website built directly from your playbook. One link. Everything a client needs to book you.</p>
+          <div class="offer-price-row">
+            <span class="offer-price">$697</span>
+            <span class="offer-price-note">one payment · ~$997 value</span>
+          </div>
+        </div>
+        <div class="offer-card-body">
+          <p class="offer-includes-label">Everything in the Playbook, plus</p>
+          <div class="offer-item"><span class="offer-tick">✓</span><span>One-page website — built from your playbook brief</span></div>
+          <div class="offer-item"><span class="offer-tick">✓</span><span>Rooted branding — clean, editorial, professional</span></div>
+          <div class="offer-item"><span class="offer-tick">✓</span><span>Calendly or booking link integrated</span></div>
+          <div class="offer-item"><span class="offer-tick">✓</span><span>Mobile-first, fast, ready to share anywhere</span></div>
+          <div class="offer-item"><span class="offer-tick">✓</span><span>Live walkthrough call once your site is built</span></div>
+          <div class="offer-item"><span class="offer-tick">✓</span><span>One round of revisions included</span></div>
+          <a href="https://calendly.com/fitbodiesbymk/discovery-call" target="_blank">
+            <button class="offer-cta offer-cta-gold">Start with a free Clarity Call →</button>
+          </a>
+          <p class="offer-delivery">Site delivered within 5 working days of your intake form</p>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -368,22 +340,105 @@
 <div class="sec sec-how">
   <div class="sec-inner">
     <p class="eyebrow">How it works</p>
-    <h2 class="how-title">Three steps.<br>One document.</h2>
+    <h2 class="how-title">One process.<br>Both offers.</h2>
     <div class="how-steps">
       <div class="how-step">
         <p class="how-n">01</p>
-        <h3>Book a Clarity Call</h3>
-        <p>A free 30-minute conversation. We talk about where you are, what you're building, and whether this is the right fit.</p>
+        <h3>Clarity Call</h3>
+        <p>Free 30 minutes. We talk about where you are, who you serve, and which offer is the right fit for you right now.</p>
       </div>
       <div class="how-step">
         <p class="how-n">02</p>
-        <h3>Answer 5 questions</h3>
-        <p>A short digital form — takes 10 minutes. The more specific you are, the sharper the playbook. No prep needed.</p>
+        <h3>Intake Form</h3>
+        <p>Five questions. Takes 10 minutes. The more specific you are, the sharper your playbook will be.</p>
       </div>
       <div class="how-step">
         <p class="how-n">03</p>
-        <h3>Get your Playbook</h3>
-        <p>Your complete offer strategy, in one polished document. We can go through it together on a call, or I'll send it directly.</p>
+        <h3>Offer Playbook</h3>
+        <p>Your complete strategy document — delivered within 48 hours. Every script, every step, ready to use.</p>
+        <p class="how-step-note">Playbook Session stops here.</p>
+      </div>
+      <div class="how-step">
+        <p class="how-n">04</p>
+        <h3>Your Website</h3>
+        <p>Built directly from your playbook — live within 5 working days. One link you can send anywhere with confidence.</p>
+        <p class="how-step-note">From Unclear to Bookable only.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CASE STUDY -->
+<div class="sec sec-case">
+  <div class="sec-inner">
+    <div class="case-grid">
+      <div class="case-left">
+        <p class="eyebrow">✦ Real result</p>
+        <h2>From an idea to a live, professional coaching site.</h2>
+        <p>Coach Thartz came with a clear expertise and no online presence. Nothing to send. Nothing to show. Just a name and a vision for what Beyond the Scale could be.</p>
+        <p>We took him through the offer process — nailed his positioning, built his pitch, then built the site from the ground up. Dark navy, bold orange, Calendly booking integrated. Professional from day one.</p>
+        <p style="color:var(--text);font-weight:500;">Now when someone asks what he does, he sends a link.</p>
+        <div class="case-stat-row">
+          <div class="case-stat">
+            <div class="case-stat-n">0</div>
+            <div class="case-stat-l">online presence<br>before</div>
+          </div>
+          <div class="case-stat">
+            <div class="case-stat-n">5</div>
+            <div class="case-stat-l">working days<br>to live</div>
+          </div>
+          <div class="case-stat">
+            <div class="case-stat-n">1</div>
+            <div class="case-stat-l">link that books<br>clients</div>
+          </div>
+        </div>
+        <div class="case-badge">beyondthescale.site is live</div>
+      </div>
+      <div class="case-right">
+        <div class="case-mockup">
+          <div class="case-mockup-bar">
+            <div class="case-mockup-dot"></div>
+            <div class="case-mockup-dot"></div>
+            <div class="case-mockup-dot"></div>
+            <span class="case-mockup-url">beyondthescale.site</span>
+          </div>
+          <div class="case-mockup-body">
+            <p class="case-mockup-tag">Beyond the Scale · Online Coaching</p>
+            <h2 class="case-mockup-h">Scale beyond what the numbers tell you.</h2>
+            <p class="case-mockup-p">A premium coaching experience for people ready to build a body and a mindset that lasts — without obsessing over the scale.</p>
+            <span class="case-mockup-btn">Book a Discovery Call →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="sec sec-about">
+  <div class="sec-inner">
+    <div class="about-grid">
+      <img src="mk-photo.jpg" alt="MK" class="about-img"/>
+      <div class="about-right">
+        <p class="eyebrow">Hey, I'm MK</p>
+        <h2>A coach who figured out the online part — and now builds it for others.</h2>
+        <p>I've been a fitness and health coach for years. I know exactly what it's like to be good at the work but unclear on how to talk about it, price it, or get found by the right people.</p>
+        <p>I didn't hire someone to solve that problem. I built my way through it — learning web design, learning offer strategy, building digital tools that actually work for coaches. <strong>That's the shortcut I'm handing you.</strong></p>
+        <p>I'm also a builder. I've created 8+ live websites and digital tools for coaches and service providers — and I built the AI-powered offer system that generates your playbook. Nobody else is offering this combination.</p>
+        <div class="about-stats">
+          <div>
+            <div class="about-stat-n">8+</div>
+            <div class="about-stat-l">coach websites<br>built and live</div>
+          </div>
+          <div>
+            <div class="about-stat-n">48h</div>
+            <div class="about-stat-l">playbook<br>turnaround</div>
+          </div>
+          <div>
+            <div class="about-stat-n">1</div>
+            <div class="about-stat-l">person who does<br>both offer + site</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -395,17 +450,17 @@
     <p class="eyebrow">Who this is for</p>
     <h2 class="who-title">If any of these sound like you, this is for you.</h2>
     <div class="who-grid">
-      <div class="who-card">Coaches who have clients but no clear, repeatable offer structure</div>
-      <div class="who-card">Consultants who price differently every time — and wonder if they're leaving money on the table</div>
-      <div class="who-card">Service providers who struggle to explain what they do without over-explaining</div>
-      <div class="who-card">Anyone running their business on referrals and hoping for the best</div>
-      <div class="who-card">People who've been doing this a while but know their positioning still isn't sharp</div>
+      <div class="who-card">Fitness, health, or wellness coaches with clients but no clear offer structure</div>
+      <div class="who-card">Consultants and service providers who price differently every time they're asked</div>
+      <div class="who-card">Coaches who are great in person but have nothing professional to send online</div>
+      <div class="who-card">Anyone running their business entirely on referrals with no deliberate system</div>
+      <div class="who-card">People who've been doing this for years but know their positioning still isn't sharp</div>
       <div class="who-card">Anyone tired of selling through long DM conversations that go nowhere</div>
     </div>
   </div>
 </div>
 
-<!-- BEFORE / AFTER -->
+<!-- BEFORE/AFTER -->
 <div class="sec sec-ba">
   <div class="sec-inner">
     <p class="eyebrow">Before &amp; after</p>
@@ -413,19 +468,19 @@
     <div class="ba-grid">
       <div class="ba-col ba-before">
         <p class="ba-label">Before</p>
-        <div class="ba-item"><span class="ba-icon">·</span><span>Long DMs explaining what you do — every single time</span></div>
+        <div class="ba-item"><span class="ba-icon">·</span><span>"Just check my Instagram" — every single time</span></div>
         <div class="ba-item"><span class="ba-icon">·</span><span>Pricing off the top of your head</span></div>
-        <div class="ba-item"><span class="ba-icon">·</span><span>"Let me think about it" — and they disappear</span></div>
-        <div class="ba-item"><span class="ba-icon">·</span><span>No clear next step for people who are interested</span></div>
-        <div class="ba-item"><span class="ba-icon">·</span><span>Selling by personality, not by positioning</span></div>
+        <div class="ba-item"><span class="ba-icon">·</span><span>Leads go quiet after a good conversation</span></div>
+        <div class="ba-item"><span class="ba-icon">·</span><span>No clean next step for people who are interested</span></div>
+        <div class="ba-item"><span class="ba-icon">·</span><span>Selling on personality alone — exhausting and inconsistent</span></div>
       </div>
       <div class="ba-col ba-after">
         <p class="ba-label">After</p>
-        <div class="ba-item"><span class="ba-icon" style="color:var(--green);">✓</span><span>A pitch line you can drop in your bio today</span></div>
+        <div class="ba-item"><span class="ba-icon" style="color:var(--green);">✓</span><span>One link that explains what you do and books the call</span></div>
         <div class="ba-item"><span class="ba-icon" style="color:var(--green);">✓</span><span>A price that feels justified, not defensive</span></div>
-        <div class="ba-item"><span class="ba-icon" style="color:var(--green);">✓</span><span>Scripts for every stage of the conversation</span></div>
-        <div class="ba-item"><span class="ba-icon" style="color:var(--green);">✓</span><span>A clear action plan for this week</span></div>
-        <div class="ba-item"><span class="ba-icon" style="color:var(--green);">✓</span><span>One document you're proud to send</span></div>
+        <div class="ba-item"><span class="ba-icon" style="color:var(--green);">✓</span><span>Scripts for every stage — DM, call, objection, close</span></div>
+        <div class="ba-item"><span class="ba-icon" style="color:var(--green);">✓</span><span>A clear, deliberate path to your next client</span></div>
+        <div class="ba-item"><span class="ba-icon" style="color:var(--green);">✓</span><span>Something you're genuinely proud to send</span></div>
       </div>
     </div>
   </div>
@@ -441,24 +496,24 @@
       </div>
       <div class="faq-list">
         <div class="faq-item">
-          <p class="faq-q">What exactly is the Offer Playbook?</p>
-          <p class="faq-a">A personalised strategy document built from your answers — covering your action plan, pitch, offer structure, DM scripts, sales call blueprint, objection responses, content ideas, and your next move. Not a template. Built from what you actually told us.</p>
+          <p class="faq-q">What's the difference between the two offers?</p>
+          <p class="faq-a">The Offer Playbook Session ($297) gives you the complete strategy — your pitch, scripts, price, and action plan in one document. From Unclear to Bookable ($697) includes everything in the Playbook, plus a professional one-page website built directly from it. Same process, bigger result.</p>
         </div>
         <div class="faq-item">
-          <p class="faq-q">How long does the whole process take?</p>
-          <p class="faq-a">The intake form takes about 10 minutes. The playbook is ready the same day. We can then go through it on a 30-minute screen-share, or I can send it directly — your choice.</p>
+          <p class="faq-q">How long does the whole thing take?</p>
+          <p class="faq-a">For the Playbook Session: clarity call, then intake form (10 min), then your document arrives within 48 hours. For the full package: add 5 working days for the website build, plus a walkthrough call once it's live. Under two weeks total.</p>
         </div>
         <div class="faq-item">
-          <p class="faq-q">Do I need to be on a call?</p>
-          <p class="faq-a">No. But most people find the screen-share useful — it's where we walk through each section together and you can ask questions in real time.</p>
+          <p class="faq-q">Do I need anything before the clarity call?</p>
+          <p class="faq-a">No. Come as you are. The call is a conversation — we figure out together where you are, what you're building, and which offer fits. No prep needed.</p>
         </div>
         <div class="faq-item">
-          <p class="faq-q">Who is this best suited for?</p>
-          <p class="faq-a">Coaches, consultants, and service-based business owners who know what they do but struggle to position it clearly, price it confidently, and talk about it without sounding scripted or salesy.</p>
+          <p class="faq-q">What kind of coaches is this for?</p>
+          <p class="faq-a">Fitness, health, wellness, life, business, mindset — any coach or consultant who has real expertise but struggles to package, price, and present it clearly. If you're good at the work but fuzzy on the business side, this is built for you.</p>
         </div>
         <div class="faq-item">
-          <p class="faq-q">What do I need to bring?</p>
-          <p class="faq-a">Nothing. Just answer the 5 intake questions honestly. The more specific you are, the sharper the playbook.</p>
+          <p class="faq-q">Can I start with the Playbook and upgrade later?</p>
+          <p class="faq-a">Yes. If you start with the Playbook Session and decide you want the site built, the $297 comes off the price of the full package. You never pay twice for the same work.</p>
         </div>
       </div>
     </div>
@@ -468,8 +523,8 @@
 <!-- FINAL CTA -->
 <div class="sec-cta">
   <p class="eyebrow">Ready when you are</p>
-  <h2>Let's build<br>your playbook.</h2>
-  <p>Book a free 30-minute Clarity Call. No pitch. No pressure. Just a conversation about your offer and what comes next.</p>
+  <h2>Let's make you<br>bookable.</h2>
+  <p>Start with a free 30-minute Clarity Call. No pitch. No pressure. Just an honest conversation about your offer and what comes next.</p>
   <a href="https://calendly.com/fitbodiesbymk/discovery-call" target="_blank">
     <button class="cta-btn">Book a Clarity Call →</button>
   </a>
