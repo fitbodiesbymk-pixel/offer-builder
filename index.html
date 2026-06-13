@@ -261,6 +261,13 @@
     .save-indicator { font-size: 11px; color: var(--muted); opacity: 0; transition: opacity 0.3s; }
     .save-indicator.visible { opacity: 1; }
 
+    /* ─── WHERE TO FIND THEM ─── */
+    .where-list { display: flex; flex-direction: column; gap: 14px; }
+    .where-item { display: flex; gap: 16px; align-items: flex-start; padding: 18px 20px; background: var(--bg); border: 1px solid var(--border); }
+    .where-icon { font-size: 20px; line-height: 1; flex-shrink: 0; margin-top: 1px; }
+    .where-body { font-size: 14px; color: var(--dark); line-height: 1.75; }
+    .where-label { font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+
     /* ─── RESPONSIVE ─── */
     @media (max-width: 640px) {
       header { padding: 18px 20px; }
@@ -307,9 +314,9 @@
       <!-- ══ WELCOME ══ -->
       <div class="screen active" id="screen-welcome">
         <h1 class="welcome-title">Let's find<br><em>your offer.</em></h1>
-        <p class="welcome-body">Five questions. A complete playbook — action plan, pitch, DM scripts, sales call structure, objection handling, content angles, and more.</p>
+        <p class="welcome-body">Six questions. A complete playbook — action plan, pitch, DM scripts, sales call structure, objection handling, content angles, and where to find your first clients.</p>
         <div class="welcome-time">
-          <span>⏱</span> <span>5 minutes</span> to complete &nbsp;·&nbsp; <span>Full playbook</span> ready at the end
+          <span>⏱</span> <span>7 minutes</span> to complete &nbsp;·&nbsp; <span>Full playbook</span> ready at the end
         </div>
         <div class="name-row">
           <label class="field-label" for="clientName">Your name</label>
@@ -327,7 +334,7 @@
         <div class="import-title">Import Client Answers</div>
         <p class="import-body">Paste the client's form responses below. Works with Google Form emails, plain text, or anything copied from WhatsApp or email — one answer per paragraph.</p>
         <div class="import-tip">
-          <strong>Google Form tip:</strong> In your form response email, copy just the five answers (not the question text), separated by blank lines. Paste below.
+          <strong>Google Form tip:</strong> In your form response email, copy just the six answers (not the question text), separated by blank lines. Paste below.
         </div>
 
         <div id="importPasteView">
@@ -337,7 +344,7 @@
           </div>
           <div class="name-row">
             <label class="field-label" for="pasteBox">Paste answers here</label>
-            <textarea class="q-textarea" id="pasteBox" style="min-height: 220px;" placeholder="Paste the 5 answers here. Put a blank line between each answer."></textarea>
+            <textarea class="q-textarea" id="pasteBox" style="min-height: 220px;" placeholder="Paste the 6 answers here. Put a blank line between each answer."></textarea>
           </div>
           <div class="btn-row">
             <button class="btn-back" onclick="switchScreen('screen-welcome')">← Back</button>
@@ -513,6 +520,13 @@
             <div class="conversation-text" id="conversationText">—</div>
           </div>
 
+          <!-- 09. Where to Find Them -->
+          <div class="light-panel">
+            <div class="sec-eyebrow">09 — Audience Map</div>
+            <div class="light-title">Where to Find Them</div>
+            <div class="where-list" id="whereList"></div>
+          </div>
+
           <!-- Closing -->
           <div class="closing-panel">
             <div class="closing-rule"></div>
@@ -553,13 +567,13 @@
   const QUESTIONS = [
     {
       text: "What's your skill or area of expertise — the thing you've learned, applied, and seen real results from?",
-      hint: "Don't be modest. What do you actually know how to do, and where have you seen it work?",
-      placeholder: "e.g. fitness coaching, digital marketing, financial planning, sales…"
+      hint: "Tell the story behind it. What did you go through to learn this? Where have you applied it — in your own life, with clients, in a job? Specific experiences make better playbooks.",
+      placeholder: "e.g. I spent 3 years losing 40 lbs and figured out what actually works. I've since coached 12 clients through the same process…"
     },
     {
       text: "Who specifically do you want to help — describe the actual person, not a category.",
-      hint: "Age, situation, what they're struggling with, what they've tried. The more specific, the better the plan.",
-      placeholder: "e.g. women in their 40s who've tried every diet and feel stuck…"
+      hint: "Age, situation, what keeps them up at night, what result they're desperate for. The more specific, the better the plan.",
+      placeholder: "e.g. women in their 40s who've tried every diet and feel stuck — they want to feel confident again, not just lose weight…"
     },
     {
       text: "What's your current situation — audience, offer, paying clients, or starting from zero?",
@@ -575,6 +589,11 @@
       text: "What would feel like a real win for you in the next 7 days?",
       hint: "Not a dream — a real, achievable thing that would make you feel like this is actually moving.",
       placeholder: "e.g. one paid client, a clear offer written down, 10 new followers who match my audience…"
+    },
+    {
+      text: "Where does your ideal client spend time online — and who in your existing contacts already fits this description?",
+      hint: "Name specific platforms, communities, or groups (LinkedIn, Facebook groups, Skool, Reddit, etc.). Then name one or two real people you already know who match your ideal client.",
+      placeholder: "e.g. LinkedIn, a local Facebook group for busy mums. My friend Sarah from my old job fits this perfectly — she's been asking for help…"
     }
   ];
 
@@ -688,11 +707,11 @@
     let blocks = raw.split(/\n\s*\n/).map(b => b.trim()).filter(Boolean);
     if (blocks.length < 5) blocks = raw.split('\n').map(l => l.trim()).filter(Boolean);
 
-    // Take first 5 meaningful blocks
-    const parsed5 = blocks.slice(0, 5);
+    // Take first N meaningful blocks
+    const parsedN = blocks.slice(0, QUESTIONS.length);
 
     answers = new Array(QUESTIONS.length).fill('');
-    parsed5.forEach((a, i) => { if (i < 5) answers[i] = a; });
+    parsedN.forEach((a, i) => { if (i < QUESTIONS.length) answers[i] = a; });
 
     // Show review fields
     const container = document.getElementById('importFields');
@@ -768,7 +787,7 @@
       `Q${i+1}: ${q.text}\nAnswer: ${answers[i] || '(no answer given)'}`
     ).join('\n\n');
 
-    const prompt = `You are a business action coach. A client answered 5 intake questions. Build a complete offer playbook from their answers.
+    const prompt = `You are a business action coach. A client answered 6 intake questions. Build a complete offer playbook from their answers.
 
 Client: ${clientName}
 
@@ -786,7 +805,7 @@ STEP_3: [same format]
 STEP_4: [same format]
 STEP_5: [same format]
 
-PITCH: [One sentence, max 20 words. Describes exactly who they help and what outcome. No jargon. Sayable out loud.]
+PITCH: [Their LAB offer statement: "I help [specific who] [get specific result] by [what you do]." Max 20 words. Based on their actual story. Sayable out loud.]
 
 OFFER_NAME: [What to call the offer. 3-6 words.]
 OFFER_PRICE: [Suggested price range with a one-phrase reason, e.g. $300-500/mo — entry-level 1:1 coaching]
@@ -807,23 +826,29 @@ OBJ_2_ANSWER: [Response]
 OBJ_3_QUESTION: [Third objection]
 OBJ_3_ANSWER: [Response]
 
-CONTENT_1: [Post angle #1 — one sentence on what to post and why it attracts their exact audience]
-CONTENT_2: [Post angle #2]
-CONTENT_3: [Post angle #3]
+CONTENT_1: [Story-based post — draw on their personal transformation or before/after. One sentence on what to post and why it resonates.]
+CONTENT_2: [Education post — one practical insight from their expertise that proves they know this topic. One sentence.]
+CONTENT_3: [Social proof or results post — highlighting a client result or their own result. One sentence.]
 
-CHECK_1: [One specific weekly action to build credibility. Short, concrete.]
-CHECK_2: [same]
-CHECK_3: [same]
-CHECK_4: [same]
-CHECK_5: [same]
+CHECK_1: [Weekly email or message to their list/warm contacts. Short, concrete.]
+CHECK_2: [Content post (use one of the angles above). Short, concrete.]
+CHECK_3: [3 genuine DM conversations — not pitches, real interactions. Short, concrete.]
+CHECK_4: [One offer mention — a clear, low-pressure ask. Short, concrete.]
+CHECK_5: [One piece of social proof gathered or shared. Short, concrete.]
 
-CONVERSATION: [The one real-world conversation to have this week. Who to reach out to, on which platform, and the opening line. 2-3 sentences. Specific enough to act on today.]
+CONVERSATION: [The one real-world conversation to have this week. Reference the specific person or platform from their Q6 answer if they named one. Who to reach out to, on which platform, and the opening line. 2-3 sentences. Specific enough to act on today.]
+
+WHERE_1: [Primary online platform or community from their answer — name it specifically. What to do first: join, search, post, or DM. 2 sentences max.]
+WHERE_2: [Second platform or community. Be specific — not just "Instagram" but what type of content, hashtag, or search to use. 2 sentences max.]
+WHERE_3: [Their warm network — the specific person(s) they named, or their most obvious existing connection. The exact opening line to use. 2 sentences max.]
 
 Rules:
-- Every field must reference what they actually told you — their specific skill, audience, and situation
+- Every field must reference what they actually told you — their specific skill, personal story, audience, and situation
 - No generic advice that could apply to anyone
+- PITCH must follow the "I help [who] get [result] by [method]" formula
 - DM messages must sound like a real person, not a template
 - Objections must be real ones for this exact offer type and price point
+- WHERE fields must be specific to what they told you in Q6, or the most logical answer based on their audience
 - Total time across all 5 steps: 60–90 minutes`;
 
     try {
@@ -837,7 +862,7 @@ Rules:
         },
         body: JSON.stringify({
           model: 'claude-haiku-4-5-20251001',
-          max_tokens: 2200,
+          max_tokens: 2800,
           messages: [{ role: 'user', content: prompt }]
         })
       });
@@ -881,8 +906,9 @@ Rules:
       callClose:   get('CALL_CLOSE'),
       objections:  [1,2,3].map(n => ({ q: get(`OBJ_${n}_QUESTION`), a: get(`OBJ_${n}_ANSWER`) })).filter(o => o.q),
       content:     [1,2,3].map(n => get(`CONTENT_${n}`)).filter(Boolean),
-      checks:      [1,2,3,4,5].map(n => get(`CHECK_${n}`)).filter(Boolean),
-      conversation: get('CONVERSATION')
+      checks:       [1,2,3,4,5].map(n => get(`CHECK_${n}`)).filter(Boolean),
+      conversation: get('CONVERSATION'),
+      whereToFind:  [1,2,3].map(n => get(`WHERE_${n}`)).filter(Boolean)
     };
 
     const p = parsed;
@@ -975,6 +1001,26 @@ Rules:
     // Conversation
     document.getElementById('conversationText').textContent = p.conversation || '—';
 
+    // Where to Find Them
+    const whereIcons = ['🌐', '📱', '👥'];
+    const whereLabels = ['Online Community / Platform', 'Social Media', 'Warm Network'];
+    const whereList = document.getElementById('whereList');
+    whereList.innerHTML = '';
+    if (p.whereToFind.length) {
+      p.whereToFind.forEach((w, i) => {
+        whereList.innerHTML += `
+          <div class="where-item">
+            <div class="where-icon">${whereIcons[i] || '📍'}</div>
+            <div class="where-body">
+              <div class="where-label">${whereLabels[i] || `Location ${i + 1}`}</div>
+              ${w}
+            </div>
+          </div>`;
+      });
+    } else {
+      whereList.innerHTML = '<div class="where-item"><div class="where-body">—</div></div>';
+    }
+
     document.getElementById('errorMsg').style.display = 'none';
     switchScreen('screen-result');
   }
@@ -1008,6 +1054,9 @@ Rules:
     p.checks?.forEach(c => { t += `☐ ${c}\n`; });
     t += `\n──────────────────────────\n08 THE CONVERSATION TO HAVE\n──────────────────────────\n\n`;
     t += p.conversation || '—';
+    t += `\n\n──────────────────────────\n09 WHERE TO FIND THEM\n──────────────────────────\n\n`;
+    const whereLabels = ['Online Community / Platform', 'Social Media', 'Warm Network'];
+    p.whereToFind?.forEach((w, i) => { t += `${whereLabels[i] || `Location ${i+1}`}:\n${w}\n\n`; });
 
     navigator.clipboard.writeText(t.trim()).then(() => {
       const btn = document.querySelector('.btn-result-action');
@@ -1039,6 +1088,11 @@ Rules:
 
     const checkHTML = p.checks.map(c =>
       `<div class="chk"><span class="chk-box">☐</span><span>${c}</span></div>`
+    ).join('');
+
+    const whereLabelsEx = ['Online Community / Platform', 'Social Media', 'Warm Network'];
+    const whereHTML = p.whereToFind.map((w, i) =>
+      `<div class="w-row"><div class="w-lbl">${whereLabelsEx[i] || `Location ${i+1}`}</div><div class="w-txt">${w}</div></div>`
     ).join('');
 
     return `<!DOCTYPE html>
@@ -1136,6 +1190,13 @@ body { font-family: 'DM Sans', sans-serif; background: #fff; color: #1C1916; fon
 
 /* CONVERSATION */
 .convo { font-size: 15px; color: #1C1916; line-height: 1.9; }
+
+/* WHERE TO FIND THEM */
+.w-row { display: flex; flex-direction: column; gap: 5px; padding: 14px 0; border-bottom: 1px solid #EAE6DE; }
+.w-row:first-child { padding-top: 0; }
+.w-row:last-child { border-bottom: none; padding-bottom: 0; }
+.w-lbl { font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #B09050; }
+.w-txt { font-size: 13px; color: #1C1916; line-height: 1.75; }
 
 /* WHAT'S NEXT */
 .next-body { font-size: 13px; color: #7A7060; line-height: 1.9; }
@@ -1240,6 +1301,12 @@ body { font-family: 'DM Sans', sans-serif; background: #fff; color: #1C1916; fon
   </div>
 
   <div class="sec">
+    <div class="sec-eye">09 — Audience Map</div>
+    <div class="sec-title">Where to Find Them</div>
+    ${whereHTML || '<p style="color:#7A7060;font-size:13px;">—</p>'}
+  </div>
+
+  <div class="sec">
     <div class="sec-eye" style="color:#1B5738;">What's Next</div>
     <div class="sec-title">Your next move</div>
     <div class="next-body">
@@ -1294,7 +1361,11 @@ body { font-family: 'DM Sans', sans-serif; background: #fff; color: #1C1916; fon
     p.content?.forEach((c, i) => { body += `${i+1}. ${c}\n`; });
     body += `\nCHECKLIST\n`;
     p.checks?.forEach(c => { body += `- ${c}\n`; });
-    body += `\nTHE CONVERSATION\n${p.conversation || '—'}\n\n---\nINTAKE ANSWERS\n\n`;
+    body += `\nTHE CONVERSATION\n${p.conversation || '—'}\n\n`;
+    body += `WHERE TO FIND THEM\n`;
+    const wLabels = ['Online Community', 'Social Media', 'Warm Network'];
+    p.whereToFind?.forEach((w, i) => { body += `${wLabels[i] || `Location ${i+1}`}: ${w}\n`; });
+    body += `\n---\nINTAKE ANSWERS\n\n`;
     QUESTIONS.forEach((q, i) => { body += `Q${i+1}: ${q.text}\n${answers[i] || '(no answer)'}\n\n`; });
 
     const fd = new FormData();
