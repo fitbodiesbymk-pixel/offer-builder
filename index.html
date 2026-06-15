@@ -1255,9 +1255,7 @@ body { font-family: 'DM Sans', sans-serif; background: #fff; color: #1C1916; fon
   .sec { page-break-inside: avoid; }
 }
 </style>
-<script>
-  document.fonts.ready.then(() => { setTimeout(() => window.print(), 400); });
-</script>
+<script>document.fonts.ready.then(function(){setTimeout(function(){window.print();},400);});<\/script>
 </head>
 <body>
 
