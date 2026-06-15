@@ -403,6 +403,10 @@
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 Download
               </button>
+              <button class="btn-result-action" id="shareLinkBtn" onclick="copyShareLink()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                Copy Share Link
+              </button>
             </div>
           </div>
 
@@ -604,6 +608,21 @@
   let parsed      = {};
 
   const now = new Date();
+
+  // Load shared result from URL hash
+  (function loadFromHash() {
+    try {
+      const hash = location.hash;
+      if (!hash.startsWith('#r=')) return;
+      const data = JSON.parse(decodeURIComponent(escape(atob(hash.slice(3)))));
+      if (!data.parsed) return;
+      parsed     = data.parsed;
+      clientName = data.clientName || 'Client';
+      // Render after DOM is ready
+      setTimeout(() => renderResult(null, parsed, clientName, data.date ? new Date(data.date) : new Date()), 0);
+    } catch(e) {}
+  })();
+
   document.getElementById('sessionDate').textContent =
     now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
@@ -882,36 +901,41 @@ Rules:
   }
 
   // ─── RENDER ───
-  function renderResult(text) {
-    const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
-    const get = (prefix) => {
-      const line = lines.find(l => l.startsWith(prefix + ':'));
-      return line ? line.slice(prefix.length + 1).trim() : '';
-    };
+  function renderResult(text, preloaded, preloadedName, preloadedDate) {
+    if (preloaded) {
+      parsed     = preloaded;
+      clientName = preloadedName || clientName;
+    } else {
+      const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+      const get = (prefix) => {
+        const line = lines.find(l => l.startsWith(prefix + ':'));
+        return line ? line.slice(prefix.length + 1).trim() : '';
+      };
+      parsed = {
+        focusType:   get('FOCUS_TYPE'),
+        timeInv:     get('TIME_INVESTMENT'),
+        stage:       get('STAGE'),
+        steps:       [1,2,3,4,5].map(n => get(`STEP_${n}`)).filter(Boolean),
+        pitch:       get('PITCH'),
+        offerName:   get('OFFER_NAME'),
+        offerPrice:  get('OFFER_PRICE'),
+        offerFormat: get('OFFER_FORMAT'),
+        dmOpener:    get('DM_OPENER'),
+        dmFollowup:  get('DM_FOLLOWUP'),
+        callOpener:  get('CALL_OPENER'),
+        callQ1:      get('CALL_Q1'),
+        callQ2:      get('CALL_Q2'),
+        callClose:   get('CALL_CLOSE'),
+        objections:  [1,2,3].map(n => ({ q: get(`OBJ_${n}_QUESTION`), a: get(`OBJ_${n}_ANSWER`) })).filter(o => o.q),
+        content:     [1,2,3].map(n => get(`CONTENT_${n}`)).filter(Boolean),
+        checks:      [1,2,3,4,5].map(n => get(`CHECK_${n}`)).filter(Boolean),
+        conversation: get('CONVERSATION'),
+        whereToFind:  [1,2,3].map(n => get(`WHERE_${n}`)).filter(Boolean)
+      };
+    }
 
-    parsed = {
-      focusType:   get('FOCUS_TYPE'),
-      timeInv:     get('TIME_INVESTMENT'),
-      stage:       get('STAGE'),
-      steps:       [1,2,3,4,5].map(n => get(`STEP_${n}`)).filter(Boolean),
-      pitch:       get('PITCH'),
-      offerName:   get('OFFER_NAME'),
-      offerPrice:  get('OFFER_PRICE'),
-      offerFormat: get('OFFER_FORMAT'),
-      dmOpener:    get('DM_OPENER'),
-      dmFollowup:  get('DM_FOLLOWUP'),
-      callOpener:  get('CALL_OPENER'),
-      callQ1:      get('CALL_Q1'),
-      callQ2:      get('CALL_Q2'),
-      callClose:   get('CALL_CLOSE'),
-      objections:  [1,2,3].map(n => ({ q: get(`OBJ_${n}_QUESTION`), a: get(`OBJ_${n}_ANSWER`) })).filter(o => o.q),
-      content:     [1,2,3].map(n => get(`CONTENT_${n}`)).filter(Boolean),
-      checks:       [1,2,3,4,5].map(n => get(`CHECK_${n}`)).filter(Boolean),
-      conversation: get('CONVERSATION'),
-      whereToFind:  [1,2,3].map(n => get(`WHERE_${n}`)).filter(Boolean)
-    };
-
-    const p = parsed;
+    const p   = parsed;
+    const now = preloadedDate || new Date();
 
     // Cover
     document.getElementById('coverDate').textContent  = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -1023,6 +1047,22 @@ Rules:
 
     document.getElementById('errorMsg').style.display = 'none';
     switchScreen('screen-result');
+  }
+
+  function copyShareLink() {
+    try {
+      const payload = JSON.stringify({ parsed, clientName, date: now.toISOString() });
+      const encoded = btoa(unescape(encodeURIComponent(payload)));
+      const url = `${location.origin}${location.pathname}#r=${encoded}`;
+      navigator.clipboard.writeText(url).then(() => {
+        const btn = document.getElementById('shareLinkBtn');
+        const orig = btn.innerHTML;
+        btn.innerHTML = '✓ Link Copied';
+        setTimeout(() => btn.innerHTML = orig, 2500);
+      });
+    } catch(e) {
+      alert('Could not generate share link. Try again.');
+    }
   }
 
   function showError(msg) {
