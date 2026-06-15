@@ -549,7 +549,7 @@
             </div>
           </div>
 
-          <div class="result-bottom">
+          <div class="result-bottom" id="resultBottom">
             <button class="btn-restart" onclick="restartIntake()">New session</button>
             <button class="btn-send" onclick="sendToMK()">Send to MK</button>
             <span class="send-confirm" id="sendConfirm">Sent.</span>
@@ -618,8 +618,11 @@
       if (!data.parsed) return;
       parsed     = data.parsed;
       clientName = data.clientName || 'Client';
-      // Render after DOM is ready
-      setTimeout(() => renderResult(null, parsed, clientName, data.date ? new Date(data.date) : new Date()), 0);
+      setTimeout(() => {
+        renderResult(null, parsed, clientName, data.date ? new Date(data.date) : new Date());
+        document.getElementById('resultBottom').style.display  = 'none';
+        document.getElementById('shareLinkBtn').style.display  = 'none';
+      }, 0);
     } catch(e) {}
   })();
 
