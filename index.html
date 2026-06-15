@@ -1206,18 +1206,23 @@ body { font-family: 'DM Sans', sans-serif; background: #fff; color: #1C1916; fon
 .doc-ft { border-top: 1px solid #DDD8CE; padding-top: 18px; margin-top: 52px; display: flex; justify-content: space-between; font-size: 11px; color: #7A7060; letter-spacing: 0.04em; }
 .doc-ft a { color: #1B5738; text-decoration: none; }
 
+@page { size: A4; margin: 0; }
 @media print {
   .print-bar { display: none !important; }
   body { padding-top: 0; }
-  .cover { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+  .cover { page-break-after: always; }
   .sec { page-break-inside: avoid; }
 }
 </style>
+<script>
+  document.fonts.ready.then(() => { setTimeout(() => window.print(), 400); });
+</script>
 </head>
 <body>
 
 <div class="print-bar">
-  <span>Offer Playbook — ${name}</span>
+  <span>In the print dialog → More Settings → turn on <strong style="color:#fff;">Background graphics</strong> → Save as PDF</span>
   <button onclick="window.print()">Save as PDF →</button>
 </div>
 
